@@ -16,6 +16,7 @@ const authUser = asycHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isKyc: user.isKyc,
       token: generateToken(user._id),
     })
   } else {
@@ -63,6 +64,7 @@ const registerUser = asycHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+      isKyc: user.isKyc,
       token: generateToken(user._id),
     })
   } else {

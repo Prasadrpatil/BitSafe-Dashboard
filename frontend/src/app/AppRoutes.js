@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Spinner from '../app/shared/Spinner'
+import KycScreen from './Screens/KycScreen'
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'))
 
@@ -40,11 +41,15 @@ const AppRoutes = () => {
 
         <Route path='/charts/chart-js' component={ChartJs} />
 
-        <Route path='/user-pages/login-1' component={Login} />
-        <Route path='/user-pages/register-1' component={Register1} />
+        {/* <Route path='/user-pages/login-1' component={Login} /> */}
+        <Route path='/login' component={Login} />
+        {/* <Route path='/user-pages/register-1' component={Register1} /> */}
+        <Route path='/register' component={Register1} />
 
         <Route path='/error-pages/error-404' component={Error404} />
         <Route path='/error-pages/error-500' component={Error500} />
+
+        <Route path='/kyc' component={KycScreen} />
 
         <Redirect to='/dashboard' />
       </Switch>
