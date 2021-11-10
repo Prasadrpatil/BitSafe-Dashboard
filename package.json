@@ -4,6 +4,10 @@
   "description": "BitSafe App",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "npm": ">=6.0.0",
+    "node": ">=10.0.0"
+  },
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
