@@ -1,26 +1,94 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { register } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import Loader from '../components/Loader'
+import { updateUserProfile } from '../../actions/userActions'
 
 const KycScreen = ({ history }) => {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
+  const [error, seterror] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [aadhar, setAadhar] = useState('')
+  const [gender, setGender] = useState('')
+  const [dob, setDob] = useState('')
+  const [disableButton, setdisableButton] = useState(true)
 
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const { userInfo } = userLogin
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
+  const {
+    loading: updateLoading,
+    error: updateError,
+    success,
+  } = userUpdateProfile
 
   useEffect(() => {
-    if (!userInfo) {
+    if (userInfo.isKyc) {
+      history.push('/dashboard')
+    } else if (!userInfo) {
       history.push('/login')
+    } else if (success) {
+      history.push('/dashboard')
     }
-  }, [history, userInfo])
+  }, [history, userInfo, success])
+
+  const uploadFileHandler = async (e) => {
+    seterror('')
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-API-KEY':
+            'Aczvgg8H9jBprmzJUvQvY2Ucbnd0vjGtSBX9OD1iWGuiHsxgoWfLSH8sU6j2',
+        },
+      }
+
+      const response = await axios.post(
+        'https://nationalapi.docsumo.com/api/v1/national/extract/?side=front&save_data=false&return_redacted=false&fraud_check=true',
+        formData,
+        config
+      )
+
+      if (name != response.data.data.name.value) {
+        seterror('Name is not matching with Document')
+      } else if (number != response.data.data.no.value) {
+        seterror('Aadhar Number is not matching with Document')
+      }
+
+      setdisableButton(false)
+
+      setDob(response.data.data.dob.value)
+      setGender(response.data.data.gender.value)
+      setAadhar(response.data.data.no.value)
+
+      setUploading(false)
+    } catch (error) {
+      seterror('Please upload a Valid Document')
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
   const onclickHandler = (e) => {
     e.preventDefault()
-    // dispatch(register(name, email, password, confirmPassword))
+    dispatch(
+      updateUserProfile({
+        id: userInfo._id,
+        aadhar: number,
+        dob: dob,
+        gender: gender,
+      })
+    )
   }
   return (
     <div>
@@ -36,6 +104,34 @@ const KycScreen = ({ history }) => {
                 Signing up is easy. It only takes a few steps
               </h6>
               <form className='pt-3'>
+                {updateLoading ? (
+                  <Loader />
+                ) : (
+                  updateError && (
+                    <div className='form-group'>
+                      <input
+                        type='text'
+                        className='form-control form-control-lg'
+                        id='error'
+                        style={{ color: 'red', borderColor: 'red' }}
+                        value={error}
+                        readonly
+                      />
+                    </div>
+                  )
+                )}
+                {error && (
+                  <div className='form-group'>
+                    <input
+                      type='text'
+                      className='form-control form-control-lg'
+                      id='error'
+                      style={{ color: 'red', borderColor: 'red' }}
+                      value={error}
+                      readonly
+                    />
+                  </div>
+                )}
                 <div className='form-group'>
                   <input
                     type='text'
@@ -64,7 +160,9 @@ const KycScreen = ({ history }) => {
                   className='form-control '
                   id='newfile'
                   required
+                  onChange={uploadFileHandler}
                 />
+                {uploading && <Loader />}
 
                 <div className='mb-4'>
                   <div className='form-check'>
@@ -80,9 +178,11 @@ const KycScreen = ({ history }) => {
                   </div>
                 </div>
                 <div className='mt-3'>
-                  <button type='submit'
+                  <button
+                    type='submit'
                     className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'
                     onClick={onclickHandler}
+                    disabled={disableButton}
                   >
                     SUBMIT
                   </button>
@@ -97,3 +197,50 @@ const KycScreen = ({ history }) => {
 }
 
 export default KycScreen
+
+// {
+//   "dob": {
+//       "conf": 0.99,
+//       "position": [
+//           509,
+//           261,
+//           655,
+//           294
+//       ],
+//       "review_required": false,
+//       "value": "25/12/1993"
+//   },
+//   "gender": {
+//       "conf": 0.99,
+//       "position": [
+//           283,
+//           310,
+//           412,
+//           351
+//       ],
+//       "review_required": false,
+//       "value": "male"
+//   },
+//   "name": {
+//       "conf": 0.99,
+//       "position": [
+//           277,
+//           219,
+//           471,
+//           258
+//       ],
+//       "review_required": false,
+//       "value": "Ranajit Mondal"
+//   },
+//   "no": {
+//       "conf": 0.98,
+//       "position": [
+//           307,
+//           502,
+//           548,
+//           532
+//       ],
+//       "review_required": false,
+//       "value": "396244635778"
+//   }
+// }

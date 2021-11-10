@@ -17,6 +17,9 @@ const authUser = asycHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
+      dob: user.dob,
+      aadhar: user.aadhar,
+      gender: user.gender,
       token: generateToken(user._id),
     })
   } else {
@@ -101,6 +104,10 @@ const updateUserProfile = asycHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.isKyc = true
+    user.dob = req.body.dob
+    user.aadhar = req.body.aadhar
+    user.gender = req.body.gender
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -112,6 +119,10 @@ const updateUserProfile = asycHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isKyc: updatedUser.isKyc,
+      dob: updatedUser.dob,
+      aadhar: updatedUser.aadhar,
+      gender: updatedUser.gender,
       token: generateToken(updatedUser._id),
     })
   } else {

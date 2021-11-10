@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { register } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import Loader from '../components/Loader'
 
 const Register = ({ history }) => {
   const [name, setName] = useState('')
@@ -39,6 +40,23 @@ const Register = ({ history }) => {
                 Signing up is easy. It only takes a few steps
               </h6>
               <form className='pt-3'>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  error && (
+                    <div className='form-group'>
+                      <input
+                        type='text'
+                        className='form-control form-control-lg'
+                        id='error'
+                        style={{ color: 'red', borderColor: 'red' }}
+                        value={error}
+                        readonly
+                      />
+                    </div>
+                  )
+                )}
+
                 <div className='form-group'>
                   <input
                     type='text'
@@ -96,7 +114,11 @@ const Register = ({ history }) => {
                 <div className='mb-4'>
                   <div className='form-check'>
                     <label className='form-check-label text-muted'>
-                      <input type='checkbox' className='form-check-input' />
+                      <input
+                        type='checkbox'
+                        className='form-check-input'
+                        checked
+                      />
                       <i className='input-helper'></i>I agree to all Terms &
                       Conditions
                     </label>
@@ -112,7 +134,7 @@ const Register = ({ history }) => {
                 </div>
                 <div className='text-center mt-4 font-weight-light'>
                   Already have an account?{' '}
-                  <Link to='/user-pages/login' className='text-primary'>
+                  <Link to='/login' className='text-primary'>
                     Login
                   </Link>
                 </div>

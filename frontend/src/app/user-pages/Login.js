@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form } from 'react-bootstrap'
+import Loader from '../components/Loader'
 import { login } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -35,6 +36,23 @@ const Login = ({ history }) => {
               <h4>Hello! let's get started</h4>
               <h6 className='font-weight-light'>Sign in to continue.</h6>
               <Form className='pt-3'>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  error && (
+                    <Form.Group className='d-flex search-field'>
+                      <Form.Control
+                        style={{ color: 'red', borderColor: 'red' }}
+                        type='name'
+                        size='lg'
+                        className='h-auto'
+                        value={error}
+                        readonly
+                      />
+                    </Form.Group>
+                  )
+                )}
+
                 <Form.Group className='d-flex search-field'>
                   <Form.Control
                     type='email'
