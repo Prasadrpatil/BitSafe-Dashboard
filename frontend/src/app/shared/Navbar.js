@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Dropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Trans } from 'react-i18next'
 import { logout } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Navbar = () => {
   const dispatch = useDispatch()
+
+  const history = useHistory()
 
   const toggleOffcanvas = () => {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active')
@@ -15,6 +17,10 @@ const Navbar = () => {
     document.querySelector('.right-sidebar').classList.toggle('open')
   }
 
+  const profileHandler = (e) => {
+    e.preventDefault()
+    history.push('/profile')
+  }
   const logoutHandler = (e) => {
     e.preventDefault()
     dispatch(logout())
@@ -312,7 +318,7 @@ const Navbar = () => {
               <Dropdown.Divider />
               <Dropdown.Item
                 href='!#'
-                onClick={(evt) => evt.preventDefault()}
+                onClick={profileHandler}
                 className='preview-item'
               >
                 <div className='preview-thumbnail'>

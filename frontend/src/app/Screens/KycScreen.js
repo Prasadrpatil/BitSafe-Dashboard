@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import Loader from '../components/Loader'
 import { updateUserProfile } from '../../actions/userActions'
+import { Form } from 'react-bootstrap'
 
 const KycScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -155,13 +156,24 @@ const KycScreen = ({ history }) => {
                   />
                 </div>
 
-                <input
-                  type='file'
-                  className='form-control '
-                  id='newfile'
-                  required
-                  onChange={uploadFileHandler}
-                />
+                <Form.Group>
+                  <div className='custom-file'>
+                    <Form.Control
+                      type='file'
+                      className='form-control visibility-hidden'
+                      id='customFileLang'
+                      lang='es'
+                      required
+                      onChange={uploadFileHandler}
+                    />
+                    <label
+                      className='custom-file-label'
+                      htmlFor='customFileLang'
+                    >
+                      Upload image
+                    </label>
+                  </div>
+                </Form.Group>
                 {uploading && <Loader />}
 
                 <div className='mb-4'>

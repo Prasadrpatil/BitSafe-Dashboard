@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Spinner from '../app/shared/Spinner'
 import KycScreen from './Screens/KycScreen'
+import ProfileScreen from './Screens/ProfileScreen'
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'))
 
@@ -50,6 +51,7 @@ const AppRoutes = () => {
         <Route path='/error-pages/error-500' component={Error500} />
 
         <Route path='/kyc' component={KycScreen} />
+        <Route path='/profile' component={ProfileScreen} />
 
         <Redirect to='/dashboard' />
       </Switch>
