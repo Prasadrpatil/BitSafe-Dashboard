@@ -41,7 +41,10 @@ const Register = ({ history }) => {
               </h6>
               <form className='pt-3'>
                 {loading ? (
-                  <Loader />
+                  <>
+                    <Loader />
+                    <br />
+                  </>
                 ) : (
                   error && (
                     <div className='form-group'>

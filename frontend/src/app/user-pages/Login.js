@@ -37,7 +37,10 @@ const Login = ({ history }) => {
               <h6 className='font-weight-light'>Sign in to continue.</h6>
               <Form className='pt-3'>
                 {loading ? (
-                  <Loader />
+                  <>
+                    <Loader />
+                    <br />
+                  </>
                 ) : (
                   error && (
                     <Form.Group className='d-flex search-field'>
