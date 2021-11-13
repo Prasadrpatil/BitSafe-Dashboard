@@ -7,6 +7,7 @@ import { login } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import Loader from '../components/Loader'
+import { Link } from 'react-router-dom'
 
 const mapData = {
   BZ: 75.0,
@@ -16,7 +17,7 @@ const mapData = {
   RO: 10.25,
   GE: 33.25,
 }
-const Dashboard = ({ history }) => {
+const Dashboard = ({ history, match }) => {
   const [transactionHistoryData, settransactionHistoryData] = useState({
     labels: ['Paypal', 'Stripe', 'Cash'],
     datasets: [
@@ -58,8 +59,9 @@ const Dashboard = ({ history }) => {
   const { userInfo } = userLogin
 
   const [coins, setCoins] = useState([])
-  const [search, setSearch] = useState('')
   const [loading, setloading] = useState(false)
+
+  const search = match.params.keyword ? match.params.keyword : ''
 
   useEffect(() => {
     setloading(true)
@@ -85,6 +87,10 @@ const Dashboard = ({ history }) => {
       history.push('/kyc')
     }
   }, [history, userInfo])
+
+  const filteredCoins = coins.filter((coin) =>
+    coin.name.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <div>
@@ -131,7 +137,13 @@ const Dashboard = ({ history }) => {
           ) : (
             <div className='card'>
               <div className='card-body'>
-                <h4 className='card-title'>Crypto Currency</h4>
+                {search ? (
+                  <h4 className='card-title'>
+                    Search Result for- {match.params.keyword}
+                  </h4>
+                ) : (
+                  <h4 className='card-title'>Crypto Currencies</h4>
+                )}
 
                 <div className='table-responsive'>
                   <table className='table'>
@@ -148,44 +160,51 @@ const Dashboard = ({ history }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {coins.map((coin) => (
-                        <tr key={coin.id}>
-                          <td>
-                            <img src={coin.image} alt='face' />
-                          </td>
-                          <td>
-                            <span>{coin.symbol}</span>
-                          </td>
-                          <td>
-                            <span>{coin.name}</span>
-                          </td>
-                          <td>
-                            <span>${coin.current_price}</span>
-                          </td>
-                          <td>
-                            <span>${coin.total_volume.toLocaleString()}</span>
-                          </td>
-                          <td>
-                            {coin.price_change_percentage_24h < 0 ? (
-                              <span style={{ color: '#fc424a' }}>
-                                {coin.price_change_percentage_24h.toFixed(2)}%
-                              </span>
-                            ) : (
-                              <span style={{ color: '#00d25b' }}>
-                                +{coin.price_change_percentage_24h.toFixed(2)}%
-                              </span>
-                            )}
-                          </td>
-                          <td>
-                            <span>${coin.market_cap.toLocaleString()}</span>
-                          </td>
-                          <td>
-                            <div className='badge badge-outline-success'>
-                              Buy Crypto
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                      {filteredCoins &&
+                        filteredCoins.map((coin) => (
+                          <tr key={coin.id}>
+                            <td>
+                              <img src={coin.image} alt='face' />
+                            </td>
+                            <td>
+                              <span>{coin.symbol}</span>
+                            </td>
+                            <td>
+                              <span>{coin.name}</span>
+                            </td>
+                            <td>
+                              <span>${coin.current_price}</span>
+                            </td>
+                            <td>
+                              <span>${coin.total_volume.toLocaleString()}</span>
+                            </td>
+                            <td>
+                              {coin.price_change_percentage_24h < 0 ? (
+                                <span style={{ color: '#fc424a' }}>
+                                  {coin.price_change_percentage_24h.toFixed(2)}%
+                                </span>
+                              ) : (
+                                <span style={{ color: '#00d25b' }}>
+                                  +{coin.price_change_percentage_24h.toFixed(2)}
+                                  %
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              <span>${coin.market_cap.toLocaleString()}</span>
+                            </td>
+                            <td>
+                              <div className='badge badge-outline-success'>
+                                <Link
+                                  style={{ color: '#00d25b' }}
+                                  to='/buy/crypto'
+                                >
+                                  Buy Crypto
+                                </Link>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

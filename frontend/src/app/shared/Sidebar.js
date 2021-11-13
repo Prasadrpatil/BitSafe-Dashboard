@@ -33,7 +33,7 @@ class Sidebar extends Component {
 
     const dropdownPaths = [
       { path: '/apps', state: 'appsMenuOpen' },
-      { path: '/basic-ui', state: 'basicUiMenuOpen' },
+      { path: '/buy', state: 'basicUiMenuOpen' },
       { path: '/form-elements', state: 'formElementsMenuOpen' },
       { path: '/tables', state: 'tablesMenuOpen' },
       { path: '/icons', state: 'iconsMenuOpen' },
@@ -166,7 +166,7 @@ class Sidebar extends Component {
           </li>
           <li
             className={
-              this.isPathActive('/basic-ui')
+              this.isPathActive('/buy')
                 ? 'nav-item menu-items active'
                 : 'nav-item menu-items'
             }
@@ -195,37 +195,37 @@ class Sidebar extends Component {
                     {' '}
                     <Link
                       className={
-                        this.isPathActive('/basic-ui/buttons')
+                        this.isPathActive('/buy/crypto')
                           ? 'nav-link active'
                           : 'nav-link'
                       }
-                      to='/basic-ui/buttons'
+                      to='/buy/crypto'
                     >
-                      <Trans>Buttons</Trans>
+                      <Trans>Buy Crypto</Trans>
                     </Link>
                   </li>
                   <li className='nav-item'>
                     {' '}
                     <Link
                       className={
-                        this.isPathActive('/basic-ui/dropdowns')
+                        this.isPathActive('/sell/crypto')
                           ? 'nav-link active'
                           : 'nav-link'
                       }
-                      to='/basic-ui/dropdowns'
+                      to='/sell/crypto'
                     >
-                      <Trans>Dropdowns</Trans>
+                      <Trans>Sell Crypto</Trans>
                     </Link>
                   </li>
                   <li className='nav-item'>
                     {' '}
                     <Link
                       className={
-                        this.isPathActive('/basic-ui/typography')
+                        this.isPathActive('/buy/typography')
                           ? 'nav-link active'
                           : 'nav-link'
                       }
-                      to='/basic-ui/typography'
+                      to='/buy/typography'
                     >
                       <Trans>Typography</Trans>
                     </Link>

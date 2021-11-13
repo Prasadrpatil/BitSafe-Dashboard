@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Spinner from '../app/shared/Spinner'
+import BuyScreen from './Screens/BuyScreen'
+import SellScreen from './Screens/SellScreen'
 import KycScreen from './Screens/KycScreen'
 import ProfileScreen from './Screens/ProfileScreen'
 
@@ -29,6 +31,7 @@ const AppRoutes = () => {
     <Suspense fallback={<Spinner />}>
       <Switch>
         <Route path='/dashboard' component={Dashboard} />
+        <Route path='/search/:keyword' component={Dashboard} />
 
         <Route path='/basic-ui/buttons' component={Buttons} />
         <Route path='/basic-ui/dropdowns' component={Dropdowns} />
@@ -52,6 +55,8 @@ const AppRoutes = () => {
 
         <Route path='/kyc' component={KycScreen} />
         <Route path='/profile' component={ProfileScreen} />
+        <Route path='/buy/crypto' component={BuyScreen} />
+        <Route path='/sell/crypto' component={SellScreen} />
 
         <Redirect to='/dashboard' />
       </Switch>

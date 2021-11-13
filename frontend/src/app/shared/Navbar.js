@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import { Trans } from 'react-i18next'
@@ -6,6 +6,8 @@ import { logout } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Navbar = () => {
+  const [keyword, setkeyword] = useState('')
+
   const dispatch = useDispatch()
 
   const history = useHistory()
@@ -17,6 +19,10 @@ const Navbar = () => {
     document.querySelector('.right-sidebar').classList.toggle('open')
   }
 
+  const handleChange = (e) => {
+    setkeyword(e.target.value)
+  }
+
   const profileHandler = (e) => {
     e.preventDefault()
     history.push('/profile')
@@ -24,6 +30,10 @@ const Navbar = () => {
   const logoutHandler = (e) => {
     e.preventDefault()
     dispatch(logout())
+  }
+  const submitHandler = (e) => {
+    e.preventDefault()
+    history.push(`/search/${keyword}`)
   }
 
   return (
@@ -43,11 +53,15 @@ const Navbar = () => {
         </button>
         <ul className='navbar-nav w-100'>
           <li className='nav-item w-100'>
-            <form className='nav-link mt-2 mt-md-0 d-none d-lg-flex search'>
+            <form
+              className='nav-link mt-2 mt-md-0 d-none d-lg-flex search'
+              onSubmit={submitHandler}
+            >
               <input
                 type='text'
                 className='form-control'
-                placeholder='Search products'
+                placeholder='Search Crypto Currency'
+                onChange={handleChange}
               />
             </form>
           </li>
