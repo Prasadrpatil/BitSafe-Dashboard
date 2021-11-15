@@ -63,7 +63,7 @@ const Dashboard = ({ history, match }) => {
 
   const search = match.params.keyword ? match.params.keyword : ''
 
-  useEffect(() => {
+  const getData = () => {
     setloading(true)
     axios
       .get(
@@ -78,6 +78,16 @@ const Dashboard = ({ history, match }) => {
         console.log(error)
         setloading(false)
       })
+  }
+
+  useEffect(() => {
+    getData()
+
+    const interval = setInterval(() => {
+      getData()
+    }, 30000)
+
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
