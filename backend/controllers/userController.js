@@ -193,6 +193,13 @@ const updateUser = asycHandler(async (req, res) => {
   }
 })
 
+// @des     Save Buy Crypto Order
+// @route   POST /api/users/
+// @access  Private
+const buyCrypto = asycHandler(async (req, res) => {
+  console.log('buy')
+})
+
 export {
   authUser,
   getUserProfile,
@@ -202,4 +209,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  buyCrypto,
 }

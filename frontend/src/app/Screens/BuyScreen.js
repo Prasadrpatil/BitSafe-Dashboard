@@ -2,18 +2,79 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Loader from '../components/Loader'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../actions/userActions'
 
-const BuyScreen = () => {
+const BuyScreen = ({ history }) => {
   const [condition, setCondition] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
   const [walletId, setWalletid] = useState('')
   const [pay, setPay] = useState()
   const [receive, setReceive] = useState()
   const [currency, setCurrency] = useState('btc')
   const [cryptoList, setCryptoList] = useState([])
-  const [show, setShow] = useState(true)
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script')
+      script.src = src
+      script.onload = () => {
+        resolve(true)
+      }
+      script.onerror = () => {
+        resolve(false)
+      }
+      document.body.appendChild(script)
+    })
+  }
+
+  useEffect(() => {
+    loadScript('https://checkout.razorpay.com/v1/checkout.js')
+  })
+
+  const saveOrder = async () => {
+    history.push('/profile')
+  }
+
+  const handler = async (e) => {
+    e.preventDefault()
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.post('/api/razorpay', { pay }, config)
+    // console.log(data)
+    var options = {
+      key: 'rzp_test_JlcMX9ylmcUBPj',
+      amount: data.amount,
+      currency: data.currency,
+      name: 'BitSafe',
+      description: `Reliable Place to Buy Crypto`,
+      image: 'https://i.ibb.co/6NGMT0k/logo1.png',
+      order_id: data.id,
+      handler: function (response) {
+        let paymentId = response.razorpay_payment_id
+        let orderId = response.razorpay_order_id
+        let razorpaySign = response.razorpay_signature
+        saveOrder(paymentId, orderId, razorpaySign)
+      },
+      notes: {
+        address: 'Razorpay Corporate Office',
+      },
+      theme: {
+        color: '#0090e7',
+      },
+    }
+
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
+  }
 
   useEffect(() => {
     axios
@@ -159,9 +220,8 @@ const BuyScreen = () => {
                     id='exampleInputUsername1'
                     type='text'
                     placeholder='You Name'
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    disabled={condition}
+                    value={userInfo.name}
+                    disabled
                     required
                   />
                 </div>
@@ -171,9 +231,8 @@ const BuyScreen = () => {
                     id='exampleInputUsername1'
                     type='email'
                     placeholder='You Email'
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    disabled={condition}
+                    value={userInfo.email}
+                    disabled
                     required
                   />
                 </div>
@@ -183,9 +242,8 @@ const BuyScreen = () => {
                     id='exampleInputUsername1'
                     type='number'
                     placeholder='You Phone Number'
-                    onChange={(e) => setPhone(e.target.value)}
-                    value={phone}
-                    disabled={condition}
+                    value={userInfo.phone}
+                    disabled
                     required
                   />
                 </div>
@@ -217,7 +275,10 @@ const BuyScreen = () => {
                 </div>
                 <div className='mt-3'>
                   {condition ? (
-                    <button className='btn btn-block btn-success btn-lg font-weight-medium auth-form-btn'>
+                    <button
+                      className='btn btn-block btn-success btn-lg font-weight-medium auth-form-btn'
+                      onClick={handler}
+                    >
                       Pay ${pay}
                     </button>
                   ) : (

@@ -8,6 +8,7 @@ import {
   deleteUser,
   getUserById,
   updateUser,
+  buyCrypto,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -24,4 +25,6 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
+
+router.route('/buyCrypto').post(protect, buyCrypto)
 export default router

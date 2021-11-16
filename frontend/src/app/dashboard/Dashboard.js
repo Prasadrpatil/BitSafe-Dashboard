@@ -149,7 +149,7 @@ const Dashboard = ({ history, match }) => {
               <div className='card-body'>
                 {search ? (
                   <h4 className='card-title'>
-                    Search Result for- {match.params.keyword}
+                    Search Result for- "{match.params.keyword}"
                   </h4>
                 ) : (
                   <h4 className='card-title'>Crypto Currencies</h4>
