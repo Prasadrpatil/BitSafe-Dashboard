@@ -4,6 +4,7 @@ import Loader from '../components/Loader'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { buyCryptoAction } from '../../actions/userActions'
+import URL from '../../URL'
 
 const BuyScreen = ({ history }) => {
   const [condition, setCondition] = useState(false)
@@ -83,7 +84,7 @@ const BuyScreen = ({ history }) => {
       },
     }
 
-    const { data } = await axios.post('/api/razorpay', { pay }, config)
+    const { data } = await axios.post(`${URL}/api/razorpay`, { pay }, config)
     // console.log(data)
     var options = {
       key: 'rzp_test_JlcMX9ylmcUBPj',
