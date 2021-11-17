@@ -1,5 +1,6 @@
 import path from 'path'
 import express from 'express'
+import cors from 'cors'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import morgan from 'morgan'
@@ -14,6 +15,8 @@ dotenv.config()
 connectDB()
 
 const app = express()
+
+app.use(cors())
 
 if (process.env.NODE_ENV === 'developement') {
   app.use(morgan('dev'))
