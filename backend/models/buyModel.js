@@ -11,8 +11,20 @@ const buySchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    amountPaid: {
+      type: Number,
+      required: true,
+    },
     units: {
       type: Number,
+      required: true,
+    },
+    mobile: {
+      type: Number,
+      required: true,
+    },
+    walletId: {
+      type: String,
       required: true,
     },
     paymentInfo: {

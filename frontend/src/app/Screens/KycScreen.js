@@ -29,10 +29,10 @@ const KycScreen = ({ history }) => {
   } = userUpdateProfile
 
   useEffect(() => {
-    if (userInfo.isKyc) {
-      history.push('/dashboard')
-    } else if (!userInfo) {
+    if (!userInfo) {
       history.push('/login')
+    } else if (userInfo.isKyc) {
+      history.push('/dashboard')
     } else if (success) {
       history.push('/dashboard')
     }

@@ -7,13 +7,16 @@ import Loader from '../components/Loader'
 const Register = ({ history }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const dispatch = useDispatch()
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
   const userRegister = useSelector((state) => state.userRegister)
-  const { loading, error, userInfo } = userRegister
+  const { loading, error } = userRegister
 
   useEffect(() => {
     if (userInfo) {
@@ -23,7 +26,7 @@ const Register = ({ history }) => {
 
   const onclickHandler = (e) => {
     e.preventDefault()
-    dispatch(register(name, email, password, confirmPassword))
+    dispatch(register(name, email, phone, password, confirmPassword))
   }
 
   return (
@@ -92,6 +95,17 @@ const Register = ({ history }) => {
                     <option>United Kingdom</option>
                     <option>United States of America</option>
                   </select>
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='number'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='Phone Number'
+                    required
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
                 </div>
                 <div className='form-group'>
                   <input

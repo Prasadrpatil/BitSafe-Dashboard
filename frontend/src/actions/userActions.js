@@ -23,6 +23,9 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  BUY_CRYPTO_REQUEST,
+  BUY_CRYPTO_SUCCESS,
+  BUY_CRYPTO_FAIL,
 } from '../constants/userConstants'
 import axios from 'axios'
 
@@ -70,7 +73,7 @@ export const logout = () => (dispatch) => {
 }
 
 export const register =
-  (name, email, password, confirmPassword) => async (dispatch) => {
+  (name, email, phone, password, confirmPassword) => async (dispatch) => {
     try {
       dispatch({
         type: USER_REGISTER_REQUEST,
@@ -84,7 +87,7 @@ export const register =
 
       const { data } = await axios.post(
         '/api/users',
-        { name, email, password, confirmPassword },
+        { name, email, phone, password, confirmPassword },
         config
       )
 
@@ -98,7 +101,8 @@ export const register =
         payload: data,
       })
 
-      localStorage.setItem('userInfo', JSON.stringify(data))
+      document.location.href = '/login'
+      // localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
       dispatch({
         type: USER_REGISTER_FAIL,
@@ -282,3 +286,43 @@ export const updateUser = (user) => async (dispatch, getState) => {
     })
   }
 }
+
+export const buyCryptoAction =
+  (currency, amountPaid, units, mobile, walletId, paymentInfo) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: BUY_CRYPTO_REQUEST,
+      })
+
+      const {
+        userLogin: { userInfo },
+      } = getState()
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/users/buyCrypto`,
+        { currency, amountPaid, units, mobile, walletId, paymentInfo },
+        config
+      )
+
+      dispatch({
+        type: BUY_CRYPTO_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: BUY_CRYPTO_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response,
+      })
+    }
+  }

@@ -1,6 +1,7 @@
 import User from '../models/userModel.js'
 import asycHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
+import Buy from '../models/buyModel.js'
 
 // @des     Auth user & get token
 // @route   POST /api/users/login
@@ -15,6 +16,7 @@ const authUser = asycHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
       dob: user.dob,
@@ -32,7 +34,7 @@ const authUser = asycHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asycHandler(async (req, res) => {
-  const { name, email, password, confirmPassword } = req.body
+  const { name, email, phone, password, confirmPassword } = req.body
   console.log(req.body)
 
   const userExists = await User.findOne({ email })
@@ -44,7 +46,10 @@ const registerUser = asycHandler(async (req, res) => {
 
   // eslint-disable-next-line
   const format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-  if (password.length < 6) {
+  if (phone.length != 10) {
+    res.status(400)
+    throw new Error('Phone Number Should 10 digit')
+  } else if (password.length < 6) {
     res.status(400)
     throw new Error('Password Should AtLeast of 6 characters...')
   } else if (!format.test(password)) {
@@ -58,6 +63,7 @@ const registerUser = asycHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
+    phone,
     password,
   })
 
@@ -66,6 +72,7 @@ const registerUser = asycHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
       token: generateToken(user._id),
@@ -104,6 +111,7 @@ const updateUserProfile = asycHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.phone = req.body.phone || user.phone
     user.isKyc = true
     user.dob = req.body.dob
     user.aadhar = req.body.aadhar
@@ -118,6 +126,7 @@ const updateUserProfile = asycHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      phone: updatedUser.phone,
       isAdmin: updatedUser.isAdmin,
       isKyc: updatedUser.isKyc,
       dob: updatedUser.dob,
@@ -197,7 +206,20 @@ const updateUser = asycHandler(async (req, res) => {
 // @route   POST /api/users/
 // @access  Private
 const buyCrypto = asycHandler(async (req, res) => {
-  console.log('buy')
+  const { currency } = req.body
+
+  const order = new Buy({
+    user: req.user._id,
+    currency: currency.currency,
+    amountPaid: currency.amountPaid,
+    units: currency.units,
+    mobile: currency.mobile,
+    walletId: currency.walletId,
+    paymentInfo: currency.paymentInfo,
+  })
+
+  const createdOrder = await order.save()
+  res.status(201).json(createdOrder)
 })
 
 export {

@@ -25,6 +25,9 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
+  BUY_CRYPTO_REQUEST,
+  BUY_CRYPTO_SUCCESS,
+  BUY_CRYPTO_FAIL,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -124,6 +127,28 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
     case USER_UPDATE_RESET:
       return {
         user: {},
+      }
+    default:
+      return state
+  }
+}
+
+export const buyCryptoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BUY_CRYPTO_REQUEST:
+      return {
+        loading: true,
+      }
+    case BUY_CRYPTO_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        order: action.payload,
+      }
+    case BUY_CRYPTO_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       }
     default:
       return state

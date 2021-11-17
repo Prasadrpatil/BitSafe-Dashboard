@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Loader from '../components/Loader'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../../actions/userActions'
+import { buyCryptoAction } from '../../actions/userActions'
 
 const BuyScreen = ({ history }) => {
   const [condition, setCondition] = useState(false)
@@ -17,6 +17,28 @@ const BuyScreen = ({ history }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  const buyCrypto = useSelector((state) => state.buyCrypto)
+  const { loading, success, error } = buyCrypto
+
+  useEffect(() => {
+    if (success) {
+      history.push('/profile')
+    }
+  }, [success])
+
+  useEffect(() => {
+    axios
+      .get(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+      )
+      .then((res) => {
+        setCryptoList(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -36,8 +58,21 @@ const BuyScreen = ({ history }) => {
     loadScript('https://checkout.razorpay.com/v1/checkout.js')
   })
 
-  const saveOrder = async () => {
-    history.push('/profile')
+  const saveOrder = async (paymentId, orderId, razorpaySign) => {
+    dispatch(
+      buyCryptoAction({
+        currency: currency,
+        amountPaid: pay,
+        units: receive,
+        mobile: userInfo.phone,
+        walletId: walletId,
+        paymentInfo: {
+          paymentId: paymentId,
+          orderId: orderId,
+          razorpaySign: razorpaySign,
+        },
+      })
+    )
   }
 
   const handler = async (e) => {
@@ -75,19 +110,6 @@ const BuyScreen = ({ history }) => {
     const paymentObject = new window.Razorpay(options)
     paymentObject.open()
   }
-
-  useEffect(() => {
-    axios
-      .get(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
-      )
-      .then((res) => {
-        setCryptoList(res.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [])
 
   const onPayChange = async (e) => {
     setPay(e.target.value)
@@ -145,7 +167,7 @@ const BuyScreen = ({ history }) => {
                 Signing up is easy. It only takes a few steps
               </h6>
               <form className='pt-3' onSubmit={submitHandler}>
-                {/* {loading ? (
+                {loading ? (
                   <>
                     <Loader />
                     <br />
@@ -163,7 +185,7 @@ const BuyScreen = ({ history }) => {
                       />
                     </div>
                   )
-                )} */}
+                )}
 
                 <div className='row'>
                   <div className='col-lg-8 form-group'>
