@@ -9,6 +9,8 @@ import {
   getUserById,
   updateUser,
   buyCrypto,
+  verifyEmail,
+  generateOtp,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -26,5 +28,7 @@ router
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
 
+router.route('/generateOtp').post(generateOtp)
+router.route('/verifyEmail').post(verifyEmail)
 router.route('/buyCrypto').post(protect, buyCrypto)
 export default router

@@ -2,6 +2,9 @@ import User from '../models/userModel.js'
 import asycHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import Buy from '../models/buyModel.js'
+import Otp from '../models/otpModel.js'
+import otpGenerator from 'otp-generator'
+import {sendEmailToUserForBuy} from '../email/nodemailer.js'
 
 // @des     Auth user & get token
 // @route   POST /api/users/login
@@ -202,8 +205,70 @@ const updateUser = asycHandler(async (req, res) => {
   }
 })
 
+// @des     Vrify Email
+// @route   POST /api/users/generateOtp
+// @access  Public
+const generateOtp = asycHandler(async (req, res) => {
+  const { email } = req.body
+
+  const otpExists = await Otp.findOne({ email })
+
+  if (otpExists) {
+    otpExists.email = email
+    otpExists.otp = otpGenerator.generate(6, {
+      upperCase: false,
+      alphabets: false,
+      specialChars: false,
+    })
+    const otpExistsNew = await otpExists.save()
+    sendEmailToUserForBuy(otpExistsNew.email, otpExistsNew.otp)
+    res.json(otpExistsNew)
+  } else {
+    const otp = await Otp.create({
+      email: email,
+      otp: otpGenerator.generate(6, {
+        upperCase: false,
+        alphabets: false,
+        specialChars: false,
+      }),
+    })
+
+    if (otp) {
+      sendEmailToUserForBuy(otp.email, otp.otp)
+      res.status(201).json({
+        otp: otp.otp,
+        email: otp.email,
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid Otp Data')
+    }
+  }
+})
+
+// @des     Verify Email
+// @route   POST /api/users/verifyEmail
+// @access  Public
+const verifyEmail = asycHandler(async (req, res) => {
+  const { email, otp } = req.body
+
+  const otpExists = await Otp.findOne({ email })
+
+  if (otpExists) {
+    if (otpExists.otp === otp) {
+      res.status(201).json('OTP Verified')
+    } else {
+      res.status(401)
+      throw new Error('OTP does not match')
+    }
+  } else {
+    res.status(401)
+    throw new Error('Resend OTP Again')
+  }
+})
+
 // @des     Save Buy Crypto Order
-// @route   POST /api/users/
+// @route   POST /api/users/buyCrypto
 // @access  Private
 const buyCrypto = asycHandler(async (req, res) => {
   const { currency } = req.body
@@ -231,5 +296,7 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  generateOtp,
+  verifyEmail,
   buyCrypto,
 }
