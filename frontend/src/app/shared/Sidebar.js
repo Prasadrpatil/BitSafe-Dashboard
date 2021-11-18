@@ -4,7 +4,9 @@ import { Collapse, Dropdown } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 
 class Sidebar extends Component {
-  state = {}
+  state = { userInfo: {} }
+
+  userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
   toggleMenuState(menuState) {
     if (this.state[menuState]) {
@@ -70,17 +72,17 @@ class Sidebar extends Component {
                 <div className='count-indicator'>
                   <img
                     className='img-xs rounded-circle '
-                    src={require('../../assets/images/faces/face15.jpg')}
+                    src={require('../../assets/images/faces/users.jpg')}
                     alt='profile'
                   />
                   <span className='count bg-success'></span>
                 </div>
                 <div className='profile-name'>
                   <h5 className='mb-0 font-weight-normal'>
-                    <Trans>Henry Klein</Trans>
+                    <Trans>{this.userInfo.name}</Trans>
                   </h5>
                   <span>
-                    <Trans>Gold Member</Trans>
+                    <Trans>Bitsafe User</Trans>
                   </span>
                 </div>
               </div>

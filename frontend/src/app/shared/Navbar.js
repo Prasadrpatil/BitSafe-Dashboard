@@ -10,6 +10,9 @@ const Navbar = () => {
 
   const dispatch = useDispatch()
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const history = useHistory()
 
   const toggleOffcanvas = () => {
@@ -67,6 +70,7 @@ const Navbar = () => {
           </li>
         </ul>
         <ul className='navbar-nav navbar-nav-right'>
+          {/* 
           <Dropdown alignRight as='li' className='nav-item d-none d-lg-block'>
             <Dropdown.Toggle className='nav-link btn btn-success create-new-button no-caret'>
               + <Trans>Create New Project</Trans>
@@ -133,6 +137,7 @@ const Navbar = () => {
               </p>
             </Dropdown.Menu>
           </Dropdown>
+           */}
           <li className='nav-item d-none d-lg-block'>
             <a
               className='nav-link'
@@ -150,6 +155,7 @@ const Navbar = () => {
               <i className='mdi mdi-email'></i>
               <span className='count bg-success'></span>
             </Dropdown.Toggle>
+            {/* 
             <Dropdown.Menu className='navbar-dropdown preview-list'>
               <h6 className='p-3 mb-0'>
                 <Trans>Messages</Trans>
@@ -234,6 +240,7 @@ const Navbar = () => {
                 4 <Trans>new messages</Trans>
               </p>
             </Dropdown.Menu>
+           */}
           </Dropdown>
           <Dropdown alignRight as='li' className='nav-item border-left'>
             <Dropdown.Toggle
@@ -243,6 +250,7 @@ const Navbar = () => {
               <i className='mdi mdi-bell'></i>
               <span className='count bg-danger'></span>
             </Dropdown.Toggle>
+            {/* 
             <Dropdown.Menu className='dropdown-menu navbar-dropdown preview-list'>
               <h6 className='p-3 mb-0'>
                 <Trans>Notifications</Trans>
@@ -309,6 +317,7 @@ const Navbar = () => {
                 <Trans>See all notifications</Trans>
               </p>
             </Dropdown.Menu>
+           */}
           </Dropdown>
           <Dropdown alignRight as='li' className='nav-item'>
             <Dropdown.Toggle
@@ -318,11 +327,11 @@ const Navbar = () => {
               <div className='navbar-profile'>
                 <img
                   className='img-xs rounded-circle'
-                  src={require('../../assets/images/faces/face15.jpg')}
+                  src={require('../../assets/images/faces/users.jpg')}
                   alt='profile'
                 />
                 <p className='mb-0 d-none d-sm-block navbar-profile-name'>
-                  <Trans>Henry Klein</Trans>
+                  <Trans>{userInfo.name}</Trans>
                 </p>
                 <i className='mdi mdi-menu-down d-none d-sm-block'></i>
               </div>

@@ -4,7 +4,7 @@ import generateToken from '../utils/generateToken.js'
 import Buy from '../models/buyModel.js'
 import Otp from '../models/otpModel.js'
 import otpGenerator from 'otp-generator'
-import {sendEmailToUserForBuy} from '../email/nodemailer.js'
+import { sendEmailToUserForBuy } from '../email/nodemailer.js'
 
 // @des     Auth user & get token
 // @route   POST /api/users/login
@@ -97,7 +97,12 @@ const getUserProfile = asycHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       isAdmin: user.isAdmin,
+      isKyc: user.isKyc,
+      dob: user.dob,
+      aadhar: user.aadhar,
+      gender: user.gender,
     })
   } else {
     res.status(401)
