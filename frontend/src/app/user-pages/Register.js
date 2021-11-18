@@ -14,6 +14,7 @@ const Register = ({ history }) => {
   const [otp, setotp] = useState('')
   const [isVerified, setisVerified] = useState(false)
   const [isOtpSend, setisOtpSend] = useState(false)
+  const [submitButton, setsubmitButton] = useState(true)
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loader, setloader] = useState(false)
   const [message, setmessage] = useState('')
@@ -74,6 +75,7 @@ const Register = ({ history }) => {
       .then(() => {
         setisOtpSend(false)
         setisVerified(true)
+        setsubmitButton(false)
         setmessage('OTP Verified!')
         seterrmessage('')
         setloader(false)
@@ -277,6 +279,7 @@ const Register = ({ history }) => {
                   <button
                     className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'
                     onClick={onclickHandler}
+                    disabled={submitButton}
                   >
                     SIGN UP
                   </button>
