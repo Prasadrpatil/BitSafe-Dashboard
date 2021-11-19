@@ -199,6 +199,7 @@ const BuyScreen = ({ history }) => {
                       value={pay}
                       required
                       min='1'
+                      max='2000'
                       disabled={condition}
                     />
                   </div>

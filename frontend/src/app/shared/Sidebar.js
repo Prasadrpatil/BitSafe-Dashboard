@@ -36,11 +36,9 @@ class Sidebar extends Component {
     const dropdownPaths = [
       { path: '/apps', state: 'appsMenuOpen' },
       { path: '/buy', state: 'basicUiMenuOpen' },
-      { path: '/form-elements', state: 'formElementsMenuOpen' },
+      { path: '/sell', state: 'formElementsMenuOpen' },
       { path: '/tables', state: 'tablesMenuOpen' },
-      { path: '/icons', state: 'iconsMenuOpen' },
       { path: '/charts', state: 'chartsMenuOpen' },
-      { path: '/user-pages', state: 'userPagesMenuOpen' },
       { path: '/error-pages', state: 'errorPagesMenuOpen' },
     ]
 
@@ -79,10 +77,14 @@ class Sidebar extends Component {
                 </div>
                 <div className='profile-name'>
                   <h5 className='mb-0 font-weight-normal'>
-                    <Trans>{this.userInfo.name}</Trans>
+                    {this.userInfo && <Trans>{this.userInfo.name}</Trans>}
                   </h5>
                   <span>
-                    <Trans>Bitsafe User</Trans>
+                    {this.userInfo && this.userInfo.isAdmin ? (
+                      <Trans>Bitsafe Admin</Trans>
+                    ) : (
+                      <Trans>Bitsafe User</Trans>
+                    )}
                   </span>
                 </div>
               </div>
@@ -186,7 +188,7 @@ class Sidebar extends Component {
                 <i className='mdi mdi-laptop'></i>
               </span>
               <span className='menu-title'>
-                <Trans>Basic UI Elements</Trans>
+                <Trans>Buy Crypto</Trans>
               </span>
               <i className='menu-arrow'></i>
             </div>
@@ -206,39 +208,13 @@ class Sidebar extends Component {
                       <Trans>Buy Crypto</Trans>
                     </Link>
                   </li>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/sell/crypto')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/sell/crypto'
-                    >
-                      <Trans>Sell Crypto</Trans>
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/buy/typography')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/buy/typography'
-                    >
-                      <Trans>Typography</Trans>
-                    </Link>
-                  </li>
                 </ul>
               </div>
             </Collapse>
           </li>
           <li
             className={
-              this.isPathActive('/form-elements')
+              this.isPathActive('/sell')
                 ? 'nav-item menu-items active'
                 : 'nav-item menu-items'
             }
@@ -256,7 +232,7 @@ class Sidebar extends Component {
                 <i className='mdi mdi-playlist-play'></i>
               </span>
               <span className='menu-title'>
-                <Trans>Form Elements</Trans>
+                <Trans>Sell Crypto</Trans>
               </span>
               <i className='menu-arrow'></i>
             </div>
@@ -267,13 +243,13 @@ class Sidebar extends Component {
                     {' '}
                     <Link
                       className={
-                        this.isPathActive('/form-elements/basic-elements')
+                        this.isPathActive('/sell/crypto')
                           ? 'nav-link active'
                           : 'nav-link'
                       }
-                      to='/form-elements/basic-elements'
+                      to='/sell/crypto'
                     >
-                      <Trans>Basic Elements</Trans>
+                      <Trans>Sell Crypto</Trans>
                     </Link>
                   </li>
                 </ul>
@@ -368,108 +344,10 @@ class Sidebar extends Component {
               </div>
             </Collapse>
           </li>
-          <li
-            className={
-              this.isPathActive('/icons')
-                ? 'nav-item menu-items active'
-                : 'nav-item menu-items'
-            }
-          >
-            <div
-              className={
-                this.state.iconsMenuOpen ? 'nav-link menu-expanded' : 'nav-link'
-              }
-              onClick={() => this.toggleMenuState('iconsMenuOpen')}
-              data-toggle='collapse'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-contacts'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>Icons</Trans>
-              </span>
-              <i className='menu-arrow'></i>
-            </div>
-            <Collapse in={this.state.iconsMenuOpen}>
-              <div>
-                <ul className='nav flex-column sub-menu'>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/icons/mdi')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/icons/mdi'
-                    >
-                      <Trans>Material</Trans>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </Collapse>
-          </li>
-          <li
-            className={
-              this.isPathActive('/user-pages')
-                ? 'nav-item menu-items active'
-                : 'nav-item menu-items'
-            }
-          >
-            <div
-              className={
-                this.state.userPagesMenuOpen
-                  ? 'nav-link menu-expanded'
-                  : 'nav-link'
-              }
-              onClick={() => this.toggleMenuState('userPagesMenuOpen')}
-              data-toggle='collapse'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-security'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>User Pages</Trans>
-              </span>
-              <i className='menu-arrow'></i>
-            </div>
-            <Collapse in={this.state.userPagesMenuOpen}>
-              <div>
-                <ul className='nav flex-column sub-menu'>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/user-pages/login-1')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/user-pages/login-1'
-                    >
-                      <Trans>Login</Trans>
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/user-pages/register-1')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/user-pages/register-1'
-                    >
-                      <Trans>Register</Trans>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </Collapse>
-          </li>
+
           <li className='nav-item nav-category'>
             <span className='nav-link'>
-              <Trans>More</Trans>
+              <Trans>Admin Panel</Trans>
             </span>
           </li>
           <li
