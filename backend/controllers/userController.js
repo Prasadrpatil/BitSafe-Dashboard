@@ -5,6 +5,7 @@ import Buy from '../models/buyModel.js'
 import Otp from '../models/otpModel.js'
 import otpGenerator from 'otp-generator'
 import { sendEmailToUserForBuy } from '../email/nodemailer.js'
+import Sell from '../models/sellModel.js'
 
 // @des     Auth user & get token
 // @route   POST /api/users/login
@@ -291,6 +292,25 @@ const buyCrypto = asycHandler(async (req, res) => {
   const createdOrder = await order.save()
   res.status(201).json(createdOrder)
 })
+// @des     Save Sell Crypto Order
+// @route   POST /api/users/sellCrypto
+// @access  Private
+const sellCrypto = asycHandler(async (req, res) => {
+  const { currency } = req.body
+
+  const order = new Sell({
+    user: req.user._id,
+    currency: currency.currency,
+    amountReceive: currency.amountReceive,
+    units: currency.units,
+    mobile: currency.mobile,
+    walletId: currency.walletId,
+    bankDetail: currency.bankDetail,
+  })
+
+  const createdOrder = await order.save()
+  res.status(201).json(createdOrder)
+})
 
 export {
   authUser,
@@ -304,4 +324,5 @@ export {
   generateOtp,
   verifyEmail,
   buyCrypto,
+  sellCrypto,
 }

@@ -9,6 +9,7 @@ import {
   getUserById,
   updateUser,
   buyCrypto,
+  sellCrypto,
   verifyEmail,
   generateOtp,
 } from '../controllers/userController.js'
@@ -31,4 +32,5 @@ router
 router.route('/generateOtp').post(generateOtp)
 router.route('/verifyEmail').post(verifyEmail)
 router.route('/buyCrypto').post(protect, buyCrypto)
+router.route('/sellCrypto').post(protect, sellCrypto)
 export default router

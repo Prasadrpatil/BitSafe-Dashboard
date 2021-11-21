@@ -26,6 +26,9 @@ import {
   BUY_CRYPTO_REQUEST,
   BUY_CRYPTO_SUCCESS,
   BUY_CRYPTO_FAIL,
+  SELL_CRYPTO_REQUEST,
+  SELL_CRYPTO_SUCCESS,
+  SELL_CRYPTO_FAIL,
 } from '../constants/userConstants'
 import axios from 'axios'
 import URL from '../URL'
@@ -326,6 +329,46 @@ export const buyCryptoAction =
     } catch (error) {
       dispatch({
         type: BUY_CRYPTO_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response,
+      })
+    }
+  }
+
+export const sellCryptoAction =
+  (currency, amountReceive, units, mobile, walletId, bankDetail) =>
+  async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SELL_CRYPTO_REQUEST,
+      })
+
+      const {
+        userLogin: { userInfo },
+      } = getState()
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+
+      const { data } = await axios.post(
+        `${URL}/api/users/sellCrypto`,
+        { currency, amountReceive, units, mobile, walletId, bankDetail },
+        config
+      )
+
+      dispatch({
+        type: SELL_CRYPTO_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: SELL_CRYPTO_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

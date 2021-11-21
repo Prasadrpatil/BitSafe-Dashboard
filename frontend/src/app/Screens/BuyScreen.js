@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { buyCryptoAction } from '../../actions/userActions'
 import URL from '../../URL'
+import { BUY_CRYPTO_RESET } from '../../constants/userConstants'
 
 const BuyScreen = ({ history }) => {
   const [condition, setCondition] = useState(false)
@@ -24,6 +25,7 @@ const BuyScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: BUY_CRYPTO_RESET })
       history.push('/profile')
     }
   }, [success])
@@ -161,7 +163,7 @@ const BuyScreen = ({ history }) => {
           <div className='col-lg-8 mx-auto'>
             <div className='card text-left py-5 px-4 px-sm-5'>
               <div className='brand-logo'>
-                <img src={require('../../assets/images/logo.svg')} alt='logo' />
+                <h3 style={{ marginBottom: '-5px' }}>Buy Crypto</h3>
               </div>
               <h4>New here?</h4>
               <h6 className='font-weight-light'>

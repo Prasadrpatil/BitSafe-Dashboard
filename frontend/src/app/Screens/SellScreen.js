@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import Loader from '../components/Loader'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { buyCryptoAction } from '../../actions/userActions'
-import URL from '../../URL'
+import { sellCryptoAction } from '../../actions/userActions'
+import { SELL_CRYPTO_RESET } from '../../constants/userConstants'
 
 const SellScreen = ({ history }) => {
   const [condition, setCondition] = useState(false)
+  const [showWalletId, setShowWalletId] = useState(false)
   const [walletId, setWalletid] = useState('')
+  const [bankDetail, setBankDetail] = useState('')
   const [pay, setPay] = useState()
   const [receive, setReceive] = useState()
   const [currency, setCurrency] = useState('btc')
@@ -19,11 +21,12 @@ const SellScreen = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  const buyCrypto = useSelector((state) => state.buyCrypto)
-  const { loading, success, error } = buyCrypto
+  const sellCrypto = useSelector((state) => state.sellCrypto)
+  const { loading, success, error } = sellCrypto
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: SELL_CRYPTO_RESET })
       history.push('/profile')
     }
   }, [success])
@@ -78,6 +81,29 @@ const SellScreen = ({ history }) => {
     )
   })
 
+  const depositIdChange = (e) => {
+    setWalletid(e.target.value)
+    if (e.target.value === '') {
+      setShowWalletId(false)
+    } else {
+      setShowWalletId(true)
+    }
+  }
+
+  const sellHandler = (e) => {
+    e.preventDefault()
+    dispatch(
+      sellCryptoAction({
+        currency: currency,
+        amountReceive: pay,
+        units: receive,
+        mobile: userInfo.phone,
+        walletId: walletId,
+        bankDetail: bankDetail,
+      })
+    )
+  }
+
   const submitHandler = (e) => {
     e.preventDefault()
     setCondition(true)
@@ -90,7 +116,7 @@ const SellScreen = ({ history }) => {
           <div className='col-lg-8 mx-auto'>
             <div className='card text-left py-5 px-4 px-sm-5'>
               <div className='brand-logo'>
-                <img src={require('../../assets/images/logo.svg')} alt='logo' />
+                <h3 style={{ marginBottom: '-5px' }}>Sell Crypto</h3>
               </div>
               <h4>New here?</h4>
               <h6 className='font-weight-light'>
@@ -204,12 +230,48 @@ const SellScreen = ({ history }) => {
                     className='form-control form-control-lg'
                     id='exampleInputUsername1'
                     type='text'
-                    placeholder='You Wallet Id'
-                    onChange={(e) => setWalletid(e.target.value)}
-                    value={walletId}
+                    placeholder='Bank Details/Paypal ID'
+                    onChange={(e) => setBankDetail(e.target.value)}
+                    value={bankDetail}
                     disabled={condition}
                     required
                   />
+                </div>
+                {showWalletId && (
+                  <div className='form-group'>
+                    <input
+                      className='form-control form-control-lg'
+                      id='exampleInputUsername1'
+                      type='text'
+                      placeholder='You Wallet Id'
+                      value={walletId}
+                      disabled
+                      required
+                    />
+                  </div>
+                )}
+
+                <div className='form-group'>
+                  <select
+                    className='form-control form-control-lg'
+                    onChange={(e) => depositIdChange(e)}
+                    disabled={condition}
+                    required
+                  >
+                    <option value=''>Our Deposit Id</option>
+                    <option value='Wallet Id : 1QHcDE4fMM3NQ7p3hYsZi3yNrbCBja6q5X'>
+                      BTC Deposit Id
+                    </option>
+                    <option value='Wallet Id : DdzFFzCqrhsu8dHaH6KPKvyjvYoq9U4YwzCrSHSL4Rv9jhH4q5eRETwHfBdVB3q6gaoKkWfJdT4LcM9hLaa1gyWbtHdANYWnAxCHHJGZ'>
+                      ADA Deposit Id
+                    </option>
+                    <option value='Wallet Id : rEb8TK3gBgk5auZkwc6sHnwrGVJH8DuaLh, Tag:102871980'>
+                      XRP Deposit Id
+                    </option>
+                    <option value='Wallet Id : 0x031b8218feb1e9788dfeb352c3646b0450f93f29'>
+                      ETH(ERC20) Deposit Id
+                    </option>
+                  </select>
                 </div>
 
                 <div className='mb-4'>
@@ -226,9 +288,18 @@ const SellScreen = ({ history }) => {
                   </div>
                 </div>
                 <div className='mt-3'>
-                  <button className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'>
-                    Submit
-                  </button>
+                  {condition ? (
+                    <button
+                      className='btn btn-block btn-success btn-lg font-weight-medium auth-form-btn'
+                      onClick={sellHandler}
+                    >
+                      Sell {currency}
+                    </button>
+                  ) : (
+                    <button className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'>
+                      Submit
+                    </button>
+                  )}
                 </div>
                 <div className='text-center mt-4 font-weight-light'>
                   Already have an account?{' '}

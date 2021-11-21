@@ -28,6 +28,11 @@ import {
   BUY_CRYPTO_REQUEST,
   BUY_CRYPTO_SUCCESS,
   BUY_CRYPTO_FAIL,
+  SELL_CRYPTO_REQUEST,
+  SELL_CRYPTO_SUCCESS,
+  SELL_CRYPTO_FAIL,
+  SELL_CRYPTO_RESET,
+  BUY_CRYPTO_RESET,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -150,6 +155,32 @@ export const buyCryptoReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       }
+    case BUY_CRYPTO_RESET:
+      return {}
+    default:
+      return state
+  }
+}
+
+export const sellCryptoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SELL_CRYPTO_REQUEST:
+      return {
+        loading: true,
+      }
+    case SELL_CRYPTO_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        order: action.payload,
+      }
+    case SELL_CRYPTO_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    case SELL_CRYPTO_RESET:
+      return {}
     default:
       return state
   }
