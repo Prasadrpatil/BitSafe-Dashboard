@@ -292,6 +292,7 @@ const buyCrypto = asycHandler(async (req, res) => {
   const createdOrder = await order.save()
   res.status(201).json(createdOrder)
 })
+
 // @des     Save Sell Crypto Order
 // @route   POST /api/users/sellCrypto
 // @access  Private
@@ -312,6 +313,16 @@ const sellCrypto = asycHandler(async (req, res) => {
   res.status(201).json(createdOrder)
 })
 
+// @des     get all orders
+// @route   POST /api/users/orders
+// @access  Private
+const getOrders = asycHandler(async (req, res) => {
+  const { id } = req.body
+  let orderBuy = await Buy.find({ user: id })
+  let orderSell = await Sell.find({ user: id })
+  res.status(200).json({ orderBuy, orderSell })
+})
+
 export {
   authUser,
   getUserProfile,
@@ -325,4 +336,5 @@ export {
   verifyEmail,
   buyCrypto,
   sellCrypto,
+  getOrders,
 }

@@ -31,6 +31,11 @@ const sellSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    orderAction: {
+      type: String,
+      required: true,
+      default: 'sell',
+    },
   },
   {
     timestamps: true,
