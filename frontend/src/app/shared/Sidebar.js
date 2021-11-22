@@ -249,51 +249,6 @@ class Sidebar extends Component {
               </div>
             </Collapse>
           </li>
-          {/* 
-          <li
-            className={
-              this.isPathActive('/tables')
-                ? 'nav-item menu-items active'
-                : 'nav-item menu-items'
-            }
-          >
-            <div
-              className={
-                this.state.tablesMenuOpen
-                  ? 'nav-link menu-expanded'
-                  : 'nav-link'
-              }
-              onClick={() => this.toggleMenuState('tablesMenuOpen')}
-              data-toggle='collapse'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-table-large'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>Tables</Trans>
-              </span>
-              <i className='menu-arrow'></i>
-            </div>
-            <Collapse in={this.state.tablesMenuOpen}>
-              <div>
-                <ul className='nav flex-column sub-menu'>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/tables/basic-table')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/tables/basic-table'
-                    >
-                      <Trans>Basic Table</Trans>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </Collapse>
-          </li> */}
 
           <li
             className={
@@ -340,83 +295,167 @@ class Sidebar extends Component {
             </Collapse>
           </li>
 
-          <li className='nav-item nav-category'>
-            <span className='nav-link'>
-              <Trans>Admin Panel</Trans>
-            </span>
-          </li>
-          <li
-            className={
-              this.isPathActive('/error-pages')
-                ? 'nav-item menu-items active'
-                : 'nav-item menu-items'
-            }
-          >
-            <div
-              className={
-                this.state.errorPagesMenuOpen
-                  ? 'nav-link menu-expanded'
-                  : 'nav-link'
-              }
-              onClick={() => this.toggleMenuState('errorPagesMenuOpen')}
-              data-toggle='collapse'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-lock'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>Error Pages</Trans>
-              </span>
-              <i className='menu-arrow'></i>
-            </div>
-            <Collapse in={this.state.errorPagesMenuOpen}>
-              <div>
-                <ul className='nav flex-column sub-menu'>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/error-pages/error-404')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/error-pages/error-404'
-                    >
-                      404
-                    </Link>
-                  </li>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/error-pages/error-500')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/error-pages/error-500'
-                    >
-                      500
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </Collapse>
-          </li>
-          <li className='nav-item menu-items'>
-            <a
-              className='nav-link'
-              href='http://bootstrapdash.com/demo/corona-react-free/documentation/documentation.html'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-file-document-box'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>Documentation</Trans>
-              </span>
-            </a>
-          </li>
+          {this.userInfo && this.userInfo.isAdmin ? (
+            <>
+              <li className='nav-item nav-category'>
+                <span className='nav-link'>
+                  <Trans>Admin Panel</Trans>
+                </span>
+              </li>
+              <li
+                className={
+                  this.isPathActive('/error-pages')
+                    ? 'nav-item menu-items active'
+                    : 'nav-item menu-items'
+                }
+              >
+                <div
+                  className={
+                    this.state.errorPagesMenuOpen
+                      ? 'nav-link menu-expanded'
+                      : 'nav-link'
+                  }
+                  onClick={() => this.toggleMenuState('errorPagesMenuOpen')}
+                  data-toggle='collapse'
+                >
+                  <span className='menu-icon'>
+                    <i className='mdi mdi-lock'></i>
+                  </span>
+                  <span className='menu-title'>
+                    <Trans>Error Pages</Trans>
+                  </span>
+                  <i className='menu-arrow'></i>
+                </div>
+                <Collapse in={this.state.errorPagesMenuOpen}>
+                  <div>
+                    <ul className='nav flex-column sub-menu'>
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/error-pages/error-404')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/error-pages/error-404'
+                        >
+                          404
+                        </Link>
+                      </li>
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/error-pages/error-500')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/error-pages/error-500'
+                        >
+                          500
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </Collapse>
+              </li>
+              <li className='nav-item menu-items'>
+                <a
+                  className='nav-link'
+                  href='http://bootstrapdash.com/demo/corona-react-free/documentation/documentation.html'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                >
+                  <span className='menu-icon'>
+                    <i className='mdi mdi-file-document-box'></i>
+                  </span>
+                  <span className='menu-title'>
+                    <Trans>Documentation</Trans>
+                  </span>
+                </a>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className='nav-item nav-category'>
+                <span className='nav-link'>
+                  {/* <Trans>Admin Panel</Trans> */}
+                </span>
+              </li>
+              <li
+                className={
+                  this.isPathActive('/error-pages')
+                    ? 'nav-item menu-items active'
+                    : 'nav-item menu-items'
+                }
+              >
+                <div
+                  className={
+                    this.state.errorPagesMenuOpen
+                      ? 'nav-link menu-expanded'
+                      : 'nav-link'
+                  }
+                  onClick={() => this.toggleMenuState('errorPagesMenuOpen')}
+                  data-toggle='collapse'
+                >
+                  {/* <span className='menu-icon'>
+                    <i className='mdi mdi-lock'></i>
+                  </span> */}
+                  <span className='menu-title'>
+                    {/* <Trans>Error Pages</Trans> */}
+                  </span>
+                  {/* <i className='menu-arrow'></i> */}
+                </div>
+                <Collapse in={this.state.errorPagesMenuOpen}>
+                  <div>
+                    <ul className='nav flex-column sub-menu'>
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/error-pages/error-404')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/error-pages/error-404'
+                        >
+                          404
+                        </Link>
+                      </li>
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/error-pages/error-500')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/error-pages/error-500'
+                        >
+                          500
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </Collapse>
+              </li>
+              <li className='nav-item menu-items'>
+                <a
+                  className='nav-link'
+                  href='http://bootstrapdash.com/demo/corona-react-free/documentation/documentation.html'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                >
+                  {/* <span className='menu-icon'>
+                    <i className='mdi mdi-file-document-box'></i>
+                  </span> */}
+                  <span className='menu-title'>
+                    {/* <Trans>Documentation</Trans> */}
+                  </span>
+                </a>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     )

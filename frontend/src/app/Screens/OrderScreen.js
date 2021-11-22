@@ -13,7 +13,7 @@ const OrderScreen = () => {
     dispatch(listOrders())
   }, [])
 
-  console.log(ordersBuy && ordersBuy.reverse(), ordersSell)
+  // console.log(ordersBuy, ordersSell)
 
   return (
     <div>

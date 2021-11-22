@@ -29,7 +29,7 @@ export class Mdi extends Component {
                 <div className="col-sm-6 col-md-4 col-lg-3">
                     <i className="mdi mdi-account"></i> mdi mdi-account
                 </div>
-                <div className="col-sm-6 col-md-4 col-lg-3">
+                <div className="col-sm-6 col-md-4 col-facelg-3">
                     <i className="mdi mdi-account-box"></i> mdi mdi-account-box
                 </div>
                 <div className="col-sm-6 col-md-4 col-lg-3">

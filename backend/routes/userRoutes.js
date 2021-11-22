@@ -34,5 +34,5 @@ router.route('/generateOtp').post(generateOtp)
 router.route('/verifyEmail').post(verifyEmail)
 router.route('/buyCrypto').post(protect, buyCrypto)
 router.route('/sellCrypto').post(protect, sellCrypto)
-router.route('/orders').post(getOrders)
+router.route('/orders').post(protect, getOrders)
 export default router
