@@ -35,8 +35,9 @@ const OrderScreen = () => {
           </ol>
         </nav>
       </div>
-      <div className='row'>
-        <div className='col-lg-6 grid-margin stretch-card'>
+
+      <div className='row '>
+        <div className='col-12 grid-margin'>
           <div className='card'>
             <div className='card-body'>
               <h4 className='card-title'>Orders Placed for Buy</h4>
@@ -44,6 +45,9 @@ const OrderScreen = () => {
                 <table className='table table-hover'>
                   <thead>
                     <tr>
+                      <th>#</th>
+                      <th>Order ID</th>
+                      <th>Date & Time</th>
                       <th>Currency</th>
                       <th>Units</th>
                       <th>Amount Paid</th>
@@ -52,8 +56,18 @@ const OrderScreen = () => {
                   </thead>
                   <tbody>
                     {ordersBuy &&
-                      ordersBuy.map((order) => (
+                      ordersBuy.reverse().map((order, index) => (
                         <tr key={order._id}>
+                          <td>{index + 1}</td>
+                          <td>{order._id}</td>
+                          <td>
+                            {new Date(order.createdAt).toLocaleString(
+                              undefined,
+                              {
+                                timeZone: 'Asia/Kolkata',
+                              }
+                            )}
+                          </td>
                           <td>{order.currency}</td>
                           <td>{order.units}</td>
                           <td className='text-success'>${order.amountPaid}</td>
@@ -78,7 +92,10 @@ const OrderScreen = () => {
             </div>
           </div>
         </div>
-        <div className='col-lg-6 grid-margin stretch-card'>
+      </div>
+
+      <div className='row '>
+        <div className='col-12 grid-margin'>
           <div className='card'>
             <div className='card-body'>
               <h4 className='card-title'>Orders Placed for Sell</h4>
@@ -86,16 +103,29 @@ const OrderScreen = () => {
                 <table className='table table-hover'>
                   <thead>
                     <tr>
+                      <th>#</th>
+                      <th>Order ID</th>
+                      <th>Date & Time</th>
                       <th>Currency</th>
                       <th>Units</th>
-                      <th>Amount Receive</th>
+                      <th>Amount Recieve</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
                     {ordersSell &&
-                      ordersSell.map((order) => (
-                        <tr key={order._id}>
+                      ordersSell.reverse().map((order, index) => (
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{order._id}</td>
+                          <td>
+                            {new Date(order.createdAt).toLocaleString(
+                              undefined,
+                              {
+                                timeZone: 'Asia/Kolkata',
+                              }
+                            )}
+                          </td>
                           <td>{order.currency}</td>
                           <td>{order.units}</td>
                           <td className='text-success'>
