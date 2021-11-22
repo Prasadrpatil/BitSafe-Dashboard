@@ -12,6 +12,7 @@ import {
   userUpdateReducer,
   buyCryptoReducer,
   sellCryptoReducer,
+  orderListReducer,
 } from './reducers/userReducers'
 
 const reducer = combineReducers({
@@ -24,6 +25,7 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   buyCrypto: buyCryptoReducer,
   sellCrypto: sellCryptoReducer,
+  orderList: orderListReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

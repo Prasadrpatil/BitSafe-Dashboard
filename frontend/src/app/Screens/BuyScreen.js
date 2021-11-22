@@ -12,7 +12,7 @@ const BuyScreen = ({ history }) => {
   const [walletId, setWalletid] = useState('')
   const [pay, setPay] = useState()
   const [receive, setReceive] = useState()
-  const [currency, setCurrency] = useState('btc')
+  const [currency, setCurrency] = useState('Bitcoin')
   const [cryptoList, setCryptoList] = useState([])
 
   const dispatch = useDispatch()
@@ -26,7 +26,7 @@ const BuyScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       dispatch({ type: BUY_CRYPTO_RESET })
-      history.push('/profile')
+      history.push('/orders/crypto')
     }
   }, [success])
 
@@ -66,7 +66,7 @@ const BuyScreen = ({ history }) => {
       buyCryptoAction({
         currency: currency,
         amountPaid: pay,
-        units: receive,
+        units: receive.toFixed(8),
         mobile: userInfo.phone,
         walletId: walletId,
         paymentInfo: {
@@ -123,7 +123,7 @@ const BuyScreen = ({ history }) => {
     )
 
     const filteredCoin = response.data.filter(
-      (coin) => coin.symbol.toLowerCase() === currency.toLowerCase()
+      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
     )
 
     setReceive(Number(temp) / Number(filteredCoin[0].current_price))
@@ -138,18 +138,20 @@ const BuyScreen = ({ history }) => {
     )
 
     const filteredCoin = response.data.filter(
-      (coin) => coin.symbol.toLowerCase() === currency.toLowerCase()
+      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
     )
     setPay(Number(temp) * Number(filteredCoin[0].current_price))
   }
 
   const currencyOption = cryptoList.map((crypto) => {
     return (
-      <option value={crypto.symbol} key={crypto.symbol}>
-        {crypto.symbol}
+      <option value={crypto.name} key={crypto.name}>
+        {crypto.name}
       </option>
     )
   })
+
+  console.log(currencyOption)
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -202,6 +204,7 @@ const BuyScreen = ({ history }) => {
                       required
                       min='1'
                       max='2000'
+                      step="any"
                       disabled={condition}
                     />
                   </div>

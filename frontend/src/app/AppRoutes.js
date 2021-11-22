@@ -5,6 +5,7 @@ import BuyScreen from './Screens/BuyScreen'
 import SellScreen from './Screens/SellScreen'
 import KycScreen from './Screens/KycScreen'
 import ProfileScreen from './Screens/ProfileScreen'
+import OrderScreen from './Screens/OrderScreen'
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'))
 
@@ -57,6 +58,7 @@ const AppRoutes = () => {
         <Route path='/profile' component={ProfileScreen} />
         <Route path='/buy/crypto' component={BuyScreen} />
         <Route path='/sell/crypto' component={SellScreen} />
+        <Route path='/orders/crypto' component={OrderScreen} />
 
         <Redirect to='/dashboard' />
       </Switch>

@@ -320,7 +320,7 @@ const getOrders = asycHandler(async (req, res) => {
   const { id } = req.body
   let orderBuy = await Buy.find({ user: id })
   let orderSell = await Sell.find({ user: id })
-  res.status(200).json({ orderBuy, orderSell })
+  res.status(200).json([orderBuy, orderSell])
 })
 
 export {

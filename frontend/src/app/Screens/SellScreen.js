@@ -13,7 +13,7 @@ const SellScreen = ({ history }) => {
   const [bankDetail, setBankDetail] = useState('')
   const [pay, setPay] = useState()
   const [receive, setReceive] = useState()
-  const [currency, setCurrency] = useState('btc')
+  const [currency, setCurrency] = useState('Bitcoin')
   const [cryptoList, setCryptoList] = useState([])
 
   const dispatch = useDispatch()
@@ -27,7 +27,7 @@ const SellScreen = ({ history }) => {
   useEffect(() => {
     if (success) {
       dispatch({ type: SELL_CRYPTO_RESET })
-      history.push('/profile')
+      history.push('/orders/crypto')
     }
   }, [success])
 
@@ -53,7 +53,7 @@ const SellScreen = ({ history }) => {
     )
 
     const filteredCoin = response.data.filter(
-      (coin) => coin.symbol.toLowerCase() === currency.toLowerCase()
+      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
     )
 
     setReceive(Number(temp) / Number(filteredCoin[0].current_price))
@@ -68,15 +68,15 @@ const SellScreen = ({ history }) => {
     )
 
     const filteredCoin = response.data.filter(
-      (coin) => coin.symbol.toLowerCase() === currency.toLowerCase()
+      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
     )
     setPay(Number(temp) * Number(filteredCoin[0].current_price))
   }
 
   const currencyOption = cryptoList.map((crypto) => {
     return (
-      <option value={crypto.symbol} key={crypto.symbol}>
-        {crypto.symbol}
+      <option value={crypto.name} key={crypto.name}>
+        {crypto.name}
       </option>
     )
   })
@@ -179,6 +179,7 @@ const SellScreen = ({ history }) => {
                       value={pay}
                       required
                       min='1'
+                      step="any"
                       disabled={condition}
                     />
                   </div>

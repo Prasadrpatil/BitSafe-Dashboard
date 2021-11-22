@@ -36,6 +36,11 @@ const buySchema = mongoose.Schema(
       required: true,
       default: 'buy',
     },
+    isConfirmed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,

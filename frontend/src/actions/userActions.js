@@ -29,6 +29,9 @@ import {
   SELL_CRYPTO_REQUEST,
   SELL_CRYPTO_SUCCESS,
   SELL_CRYPTO_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from '../constants/userConstants'
 import axios from 'axios'
 import URL from '../URL'
@@ -376,3 +379,42 @@ export const sellCryptoAction =
       })
     }
   }
+
+export const listOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(
+      `${URL}/api/users/orders`,
+      { id: userInfo._id },
+      config
+    )
+
+    dispatch({
+      type: ORDER_LIST_SUCCESS,
+      payloadBuy: data[0],
+      payloadSell: data[1],
+    })
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.response,
+    })
+  }
+}

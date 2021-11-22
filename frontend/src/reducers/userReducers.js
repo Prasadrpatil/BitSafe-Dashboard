@@ -33,6 +33,9 @@ import {
   SELL_CRYPTO_FAIL,
   SELL_CRYPTO_RESET,
   BUY_CRYPTO_RESET,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -181,6 +184,31 @@ export const sellCryptoReducer = (state = {}, action) => {
       }
     case SELL_CRYPTO_RESET:
       return {}
+    default:
+      return state
+  }
+}
+
+export const orderListReducer = (
+  state = { ordersBuy: [], ordersSell: [] },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_LIST_REQUEST:
+      return {
+        loading: true,
+      }
+    case ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        ordersBuy: action.payloadBuy,
+        ordersSell: action.payloadSell,
+      }
+    case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
     default:
       return state
   }

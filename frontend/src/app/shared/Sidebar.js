@@ -37,7 +37,7 @@ class Sidebar extends Component {
       { path: '/apps', state: 'appsMenuOpen' },
       { path: '/buy', state: 'basicUiMenuOpen' },
       { path: '/sell', state: 'formElementsMenuOpen' },
-      { path: '/tables', state: 'tablesMenuOpen' },
+      { path: '/orders', state: 'tablesMenuOpen' },
       { path: '/charts', state: 'chartsMenuOpen' },
       { path: '/error-pages', state: 'errorPagesMenuOpen' },
     ]
@@ -204,6 +204,52 @@ class Sidebar extends Component {
               </div>
             </Collapse>
           </li>
+
+          <li
+            className={
+              this.isPathActive('/orders')
+                ? 'nav-item menu-items active'
+                : 'nav-item menu-items'
+            }
+          >
+            <div
+              className={
+                this.state.tablesMenuOpen
+                  ? 'nav-link menu-expanded'
+                  : 'nav-link'
+              }
+              onClick={() => this.toggleMenuState('tablesMenuOpen')}
+              data-toggle='collapse'
+            >
+              <span className='menu-icon'>
+                <i className='mdi mdi-table-large'></i>
+              </span>
+              <span className='menu-title'>
+                <Trans>Orders</Trans>
+              </span>
+              <i className='menu-arrow'></i>
+            </div>
+            <Collapse in={this.state.tablesMenuOpen}>
+              <div>
+                <ul className='nav flex-column sub-menu'>
+                  <li className='nav-item'>
+                    {' '}
+                    <Link
+                      className={
+                        this.isPathActive('/orders/crypto')
+                          ? 'nav-link active'
+                          : 'nav-link'
+                      }
+                      to='/orders/crypto'
+                    >
+                      <Trans>Crypto Orders</Trans>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </Collapse>
+          </li>
+          {/* 
           <li
             className={
               this.isPathActive('/tables')
@@ -247,7 +293,8 @@ class Sidebar extends Component {
                 </ul>
               </div>
             </Collapse>
-          </li>
+          </li> */}
+
           <li
             className={
               this.isPathActive('/charts')
