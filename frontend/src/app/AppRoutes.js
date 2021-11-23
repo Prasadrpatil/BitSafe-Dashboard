@@ -7,6 +7,9 @@ import KycScreen from './Screens/KycScreen'
 import ProfileScreen from './Screens/ProfileScreen'
 import OrderScreen from './Screens/OrderScreen'
 import AllUsersScreen from './Screens/AllUsersScreen'
+import AdminBuyOrdersScreen from './Screens/AdminBuyOrdersScreen'
+import AdminSellOrdersScreen from './Screens/AdminSellOrdersScreen'
+import ApproveBuyOrderScreen from './Screens/ApproveBuyOrderScreen'
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'))
 
@@ -61,6 +64,9 @@ const AppRoutes = () => {
         <Route path='/sell/crypto' component={SellScreen} />
         <Route path='/orders/crypto' component={OrderScreen} />
         <Route path='/admin/users' component={AllUsersScreen} />
+        <Route path='/a/orders/buy' component={AdminBuyOrdersScreen} />
+        <Route path='/buy/order/:id' component={ApproveBuyOrderScreen} />
+        <Route path='/a/orders/sell' component={AdminSellOrdersScreen} />
 
         <Redirect to='/dashboard' />
       </Switch>

@@ -323,6 +323,32 @@ const getOrders = asycHandler(async (req, res) => {
   res.status(200).json([orderBuy, orderSell])
 })
 
+// @des     get all buy orders
+// @route   POST /api/users/buyOrders
+// @access  Private/Admin
+const getBuyOrders = asycHandler(async (req, res) => {
+  let orderBuy = await Buy.find()
+  res.status(200).json(orderBuy)
+})
+
+// @des     update buy order
+// @route   POST /api/users/updateBuy/:id
+// @access  Private/Admin
+const updateBuyOrder = asycHandler(async (req, res) => {
+  let order = await Buy.findById(req.params.id)
+
+  if (order) {
+    order.isConfirmed = true
+
+    const updatedOrder = await order.save()
+
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
 export {
   authUser,
   getUserProfile,
@@ -337,4 +363,6 @@ export {
   buyCrypto,
   sellCrypto,
   getOrders,
+  getBuyOrders,
+  updateBuyOrder,
 }

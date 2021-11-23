@@ -40,6 +40,7 @@ class Sidebar extends Component {
       { path: '/orders', state: 'tablesMenuOpen' },
       { path: '/charts', state: 'chartsMenuOpen' },
       { path: '/admin', state: 'errorPagesMenuOpen' },
+      { path: '/a/orders', state: 'ordersMenuOpen' },
     ]
 
     dropdownPaths.forEach((obj) => {
@@ -302,6 +303,7 @@ class Sidebar extends Component {
                   <Trans>Admin Panel</Trans>
                 </span>
               </li>
+
               <li
                 className={
                   this.isPathActive('/error-pages')
@@ -346,20 +348,64 @@ class Sidebar extends Component {
                   </div>
                 </Collapse>
               </li>
-              <li className='nav-item menu-items'>
-                <a
-                  className='nav-link'
-                  href='http://bootstrapdash.com/demo/corona-react-free/documentation/documentation.html'
-                  rel='noopener noreferrer'
-                  target='_blank'
+
+              <li
+                className={
+                  this.isPathActive('/a/orders')
+                    ? 'nav-item menu-items active'
+                    : 'nav-item menu-items'
+                }
+              >
+                <div
+                  className={
+                    this.state.ordersMenuOpen
+                      ? 'nav-link menu-expanded'
+                      : 'nav-link'
+                  }
+                  onClick={() => this.toggleMenuState('ordersMenuOpen')}
+                  data-toggle='collapse'
                 >
                   <span className='menu-icon'>
-                    <i className='mdi mdi-file-document-box'></i>
+                    <i className='mdi mdi-account'></i>
                   </span>
                   <span className='menu-title'>
-                    <Trans>Documentation</Trans>
+                    <Trans>Manage Orders</Trans>
                   </span>
-                </a>
+                  <i className='menu-arrow'></i>
+                </div>
+                <Collapse in={this.state.ordersMenuOpen}>
+                  <div>
+                    <ul className='nav flex-column sub-menu'>
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/a/orders/buy')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/a/orders/buy'
+                        >
+                          Buy Orders
+                        </Link>
+                      </li>
+
+                      <li className='nav-item'>
+                        {' '}
+                        <Link
+                          className={
+                            this.isPathActive('/a/orders/sell')
+                              ? 'nav-link active'
+                              : 'nav-link'
+                          }
+                          to='/a/orders/sell'
+                        >
+                          Sell Orders
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </Collapse>
               </li>
             </>
           ) : (

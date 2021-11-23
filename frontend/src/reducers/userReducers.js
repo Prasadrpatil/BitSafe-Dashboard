@@ -36,6 +36,14 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  BUY_ORDERS_LIST_REQUEST,
+  BUY_ORDERS_LIST_SUCCESS,
+  BUY_ORDERS_LIST_FAIL,
+  BUY_ORDERS_LIST_RESET,
+  UPDATE_BUY_ORDER_REQUEST,
+  UPDATE_BUY_ORDER_SUCCESS,
+  UPDATE_BUY_ORDER_FAIL,
+  UPDATE_BUY_ORDER_RESET,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -209,6 +217,36 @@ export const orderListReducer = (
         loading: false,
         error: action.payload,
       }
+    default:
+      return state
+  }
+}
+
+export const buyOrdersListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case BUY_ORDERS_LIST_REQUEST:
+      return { loading: true }
+    case BUY_ORDERS_LIST_SUCCESS:
+      return { loading: false, orders: action.payload }
+    case BUY_ORDERS_LIST_FAIL:
+      return { loading: false, error: action.payload }
+    case BUY_ORDERS_LIST_RESET:
+      return { orders: [] }
+    default:
+      return state
+  }
+}
+
+export const updateBuyOrderReducer = (state = { order: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_BUY_ORDER_REQUEST:
+      return { loading: true }
+    case UPDATE_BUY_ORDER_SUCCESS:
+      return { loading: false, order: action.payload }
+    case UPDATE_BUY_ORDER_FAIL:
+      return { loading: false, error: action.payload }
+    case UPDATE_BUY_ORDER_RESET:
+      return { order: {} }
     default:
       return state
   }
