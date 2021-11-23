@@ -39,7 +39,7 @@ class Sidebar extends Component {
       { path: '/sell', state: 'formElementsMenuOpen' },
       { path: '/orders', state: 'tablesMenuOpen' },
       { path: '/charts', state: 'chartsMenuOpen' },
-      { path: '/error-pages', state: 'errorPagesMenuOpen' },
+      { path: '/admin', state: 'errorPagesMenuOpen' },
     ]
 
     dropdownPaths.forEach((obj) => {
@@ -319,10 +319,10 @@ class Sidebar extends Component {
                   data-toggle='collapse'
                 >
                   <span className='menu-icon'>
-                    <i className='mdi mdi-lock'></i>
+                    <i className='mdi mdi-account'></i>
                   </span>
                   <span className='menu-title'>
-                    <Trans>Error Pages</Trans>
+                    <Trans>Manage Users</Trans>
                   </span>
                   <i className='menu-arrow'></i>
                 </div>
@@ -333,26 +333,13 @@ class Sidebar extends Component {
                         {' '}
                         <Link
                           className={
-                            this.isPathActive('/error-pages/error-404')
+                            this.isPathActive('/admin/users')
                               ? 'nav-link active'
                               : 'nav-link'
                           }
-                          to='/error-pages/error-404'
+                          to='/admin/users'
                         >
-                          404
-                        </Link>
-                      </li>
-                      <li className='nav-item'>
-                        {' '}
-                        <Link
-                          className={
-                            this.isPathActive('/error-pages/error-500')
-                              ? 'nav-link active'
-                              : 'nav-link'
-                          }
-                          to='/error-pages/error-500'
-                        >
-                          500
+                          Users
                         </Link>
                       </li>
                     </ul>
@@ -419,7 +406,7 @@ class Sidebar extends Component {
                           }
                           to='/error-pages/error-404'
                         >
-                          404
+                          {/* 404 */}
                         </Link>
                       </li>
                       <li className='nav-item'>
@@ -432,7 +419,7 @@ class Sidebar extends Component {
                           }
                           to='/error-pages/error-500'
                         >
-                          500
+                          {/* 500 */}
                         </Link>
                       </li>
                     </ul>
