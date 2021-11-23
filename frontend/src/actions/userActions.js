@@ -35,11 +35,15 @@ import {
   BUY_ORDERS_LIST_REQUEST,
   BUY_ORDERS_LIST_SUCCESS,
   BUY_ORDERS_LIST_FAIL,
-  BUY_ORDERS_LIST_RESET,
   UPDATE_BUY_ORDER_REQUEST,
   UPDATE_BUY_ORDER_SUCCESS,
   UPDATE_BUY_ORDER_FAIL,
-  UPDATE_BUY_ORDER_RESET,
+  SELL_ORDERS_LIST_REQUEST,
+  SELL_ORDERS_LIST_SUCCESS,
+  SELL_ORDERS_LIST_FAIL,
+  UPDATE_SELL_ORDER_REQUEST,
+  UPDATE_SELL_ORDER_SUCCESS,
+  UPDATE_SELL_ORDER_FAIL,
 } from '../constants/userConstants'
 import axios from 'axios'
 import URL from '../URL'
@@ -485,6 +489,75 @@ export const updateAdminBuyOrder = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UPDATE_BUY_ORDER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.response,
+    })
+  }
+}
+
+export const listSellOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SELL_ORDERS_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(`${URL}/api/users/sellOrders`, config)
+
+    dispatch({
+      type: SELL_ORDERS_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SELL_ORDERS_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.response,
+    })
+  }
+}
+
+export const updateAdminSellOrder = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: UPDATE_SELL_ORDER_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(
+      `${URL}/api/users/updateSell/${id}`,
+      config
+    )
+
+    dispatch({
+      type: UPDATE_SELL_ORDER_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SELL_ORDER_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

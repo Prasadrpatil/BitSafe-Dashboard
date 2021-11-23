@@ -15,6 +15,8 @@ import {
   getOrders,
   getBuyOrders,
   updateBuyOrder,
+  getSellOrders,
+  updateSellOrder,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -39,4 +41,6 @@ router.route('/sellCrypto').post(protect, sellCrypto)
 router.route('/orders').post(protect, getOrders)
 router.route('/buyOrders').post(getBuyOrders)
 router.route('/updateBuy/:id').put(updateBuyOrder)
+router.route('/sellOrders').post(getSellOrders)
+router.route('/updateSell/:id').put(updateSellOrder)
 export default router

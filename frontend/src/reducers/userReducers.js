@@ -44,6 +44,14 @@ import {
   UPDATE_BUY_ORDER_SUCCESS,
   UPDATE_BUY_ORDER_FAIL,
   UPDATE_BUY_ORDER_RESET,
+  SELL_ORDERS_LIST_REQUEST,
+  SELL_ORDERS_LIST_SUCCESS,
+  SELL_ORDERS_LIST_FAIL,
+  SELL_ORDERS_LIST_RESET,
+  UPDATE_SELL_ORDER_REQUEST,
+  UPDATE_SELL_ORDER_SUCCESS,
+  UPDATE_SELL_ORDER_FAIL,
+  UPDATE_SELL_ORDER_RESET,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -246,6 +254,36 @@ export const updateBuyOrderReducer = (state = { order: {} }, action) => {
     case UPDATE_BUY_ORDER_FAIL:
       return { loading: false, error: action.payload }
     case UPDATE_BUY_ORDER_RESET:
+      return { order: {} }
+    default:
+      return state
+  }
+}
+
+export const sellOrdersListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case SELL_ORDERS_LIST_REQUEST:
+      return { loading: true }
+    case SELL_ORDERS_LIST_SUCCESS:
+      return { loading: false, orders: action.payload }
+    case SELL_ORDERS_LIST_FAIL:
+      return { loading: false, error: action.payload }
+    case SELL_ORDERS_LIST_RESET:
+      return { orders: [] }
+    default:
+      return state
+  }
+}
+
+export const updateSellOrderReducer = (state = { order: {} }, action) => {
+  switch (action.type) {
+    case UPDATE_SELL_ORDER_REQUEST:
+      return { loading: true }
+    case UPDATE_SELL_ORDER_SUCCESS:
+      return { loading: false, order: action.payload }
+    case UPDATE_SELL_ORDER_FAIL:
+      return { loading: false, error: action.payload }
+    case UPDATE_SELL_ORDER_RESET:
       return { order: {} }
     default:
       return state
