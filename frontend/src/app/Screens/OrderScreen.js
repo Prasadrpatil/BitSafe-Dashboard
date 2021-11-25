@@ -22,6 +22,7 @@ const OrderScreen = () => {
           <Loader />
         </>
       )}
+      
       <div className='page-header'>
         <h3 className='page-title'> Crypto Orders </h3>
         <nav aria-label='breadcrumb'>

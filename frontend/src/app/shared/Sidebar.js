@@ -38,9 +38,9 @@ class Sidebar extends Component {
       { path: '/buy', state: 'basicUiMenuOpen' },
       { path: '/sell', state: 'formElementsMenuOpen' },
       { path: '/orders', state: 'tablesMenuOpen' },
-      { path: '/charts', state: 'chartsMenuOpen' },
       { path: '/admin', state: 'errorPagesMenuOpen' },
       { path: '/a/orders', state: 'ordersMenuOpen' },
+      { path: '/portfolio', state: 'portfolioMenuOpen' },
     ]
 
     dropdownPaths.forEach((obj) => {
@@ -101,6 +101,7 @@ class Sidebar extends Component {
               <Trans>Navigation</Trans>
             </span>
           </li>
+
           <li
             className={
               this.isPathActive('/dashboard')
@@ -117,6 +118,24 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>
+
+          <li
+            className={
+              this.isPathActive('/portfolio')
+                ? 'nav-item menu-items active'
+                : 'nav-item menu-items'
+            }
+          >
+            <Link className='nav-link' to='/portfolio'>
+              <span className='menu-icon'>
+                <i className='mdi mdi-chart-bar'></i>
+              </span>
+              <span className='menu-title'>
+                <Trans>Portfolio</Trans>
+              </span>
+            </Link>
+          </li>
+
           <li
             className={
               this.isPathActive('/buy')
@@ -244,51 +263,6 @@ class Sidebar extends Component {
                       to='/orders/crypto'
                     >
                       <Trans>Crypto Orders</Trans>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </Collapse>
-          </li>
-
-          <li
-            className={
-              this.isPathActive('/charts')
-                ? 'nav-item menu-items active'
-                : 'nav-item menu-items'
-            }
-          >
-            <div
-              className={
-                this.state.chartsMenuOpen
-                  ? 'nav-link menu-expanded'
-                  : 'nav-link'
-              }
-              onClick={() => this.toggleMenuState('chartsMenuOpen')}
-              data-toggle='collapse'
-            >
-              <span className='menu-icon'>
-                <i className='mdi mdi-chart-bar'></i>
-              </span>
-              <span className='menu-title'>
-                <Trans>Charts</Trans>
-              </span>
-              <i className='menu-arrow'></i>
-            </div>
-            <Collapse in={this.state.chartsMenuOpen}>
-              <div>
-                <ul className='nav flex-column sub-menu'>
-                  <li className='nav-item'>
-                    {' '}
-                    <Link
-                      className={
-                        this.isPathActive('/charts/chart-js')
-                          ? 'nav-link active'
-                          : 'nav-link'
-                      }
-                      to='/charts/chart-js'
-                    >
-                      <Trans>Chart Js</Trans>
                     </Link>
                   </li>
                 </ul>

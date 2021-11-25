@@ -375,6 +375,16 @@ const updateSellOrder = asycHandler(async (req, res) => {
   }
 })
 
+// @des     get portfolio
+// @route   POST /api/users/portfolio
+// @access  Private
+const getPortfolio = asycHandler(async (req, res) => {
+  const { id } = req.body
+  let orderBuy = await Buy.find({ user: id, isConfirmed: true })
+
+  res.status(200).json(orderBuy)
+})
+
 export {
   authUser,
   getUserProfile,
@@ -393,4 +403,5 @@ export {
   updateBuyOrder,
   getSellOrders,
   updateSellOrder,
+  getPortfolio,
 }

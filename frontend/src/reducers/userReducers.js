@@ -52,6 +52,9 @@ import {
   UPDATE_SELL_ORDER_SUCCESS,
   UPDATE_SELL_ORDER_FAIL,
   UPDATE_SELL_ORDER_RESET,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAIL,
 } from '../constants/userConstants'
 
 export const userLoginReducer = (state = {}, action) => {
@@ -285,6 +288,27 @@ export const updateSellOrderReducer = (state = { order: {} }, action) => {
       return { loading: false, error: action.payload }
     case UPDATE_SELL_ORDER_RESET:
       return { order: {} }
+    default:
+      return state
+  }
+}
+
+export const portfolioReducer = (state = { portfolio: [] }, action) => {
+  switch (action.type) {
+    case PORTFOLIO_LIST_REQUEST:
+      return {
+        loading: true,
+      }
+    case PORTFOLIO_LIST_SUCCESS:
+      return {
+        loading: false,
+        portfolio: action.payload,
+      }
+    case PORTFOLIO_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
     default:
       return state
   }

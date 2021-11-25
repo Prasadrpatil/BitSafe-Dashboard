@@ -17,6 +17,7 @@ import {
   updateBuyOrder,
   getSellOrders,
   updateSellOrder,
+  getPortfolio,
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -43,4 +44,5 @@ router.route('/buyOrders').post(getBuyOrders)
 router.route('/updateBuy/:id').put(updateBuyOrder)
 router.route('/sellOrders').post(getSellOrders)
 router.route('/updateSell/:id').put(updateSellOrder)
+router.route('/portfolio').post(getPortfolio)
 export default router

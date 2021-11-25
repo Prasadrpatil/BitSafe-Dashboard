@@ -44,6 +44,9 @@ import {
   UPDATE_SELL_ORDER_REQUEST,
   UPDATE_SELL_ORDER_SUCCESS,
   UPDATE_SELL_ORDER_FAIL,
+  PORTFOLIO_LIST_REQUEST,
+  PORTFOLIO_LIST_SUCCESS,
+  PORTFOLIO_LIST_FAIL,
 } from '../constants/userConstants'
 import axios from 'axios'
 import URL from '../URL'
@@ -558,6 +561,44 @@ export const updateAdminSellOrder = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UPDATE_SELL_ORDER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.response,
+    })
+  }
+}
+
+export const getPortfolio = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: PORTFOLIO_LIST_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(
+      `${URL}/api/users/portfolio`,
+      { id: userInfo._id },
+      config
+    )
+
+    dispatch({
+      type: PORTFOLIO_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PORTFOLIO_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

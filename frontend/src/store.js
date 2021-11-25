@@ -17,6 +17,7 @@ import {
   updateBuyOrderReducer,
   sellOrdersListReducer,
   updateSellOrderReducer,
+  portfolioReducer,
 } from './reducers/userReducers'
 
 const reducer = combineReducers({
@@ -34,6 +35,7 @@ const reducer = combineReducers({
   updateBuyOrder: updateBuyOrderReducer,
   sellOrdersList: sellOrdersListReducer,
   updateSellOrder: updateSellOrderReducer,
+  portfolioList: portfolioReducer,
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
