@@ -3,17 +3,52 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPortfolio } from '../../actions/userActions'
 import Loader from '../components/Loader'
+import axios from 'axios'
 
 const PortfolioScreen = () => {
+  const [coins, setcoins] = useState([])
+  let arr
+  let currentPrice = []
   const dispatch = useDispatch()
 
+  console.log('ggggggggggggg', currentPrice)
+
   const portfolioList = useSelector((state) => state.portfolioList)
-  const { loading, error, portfolio } = portfolioList
-  useEffect(() => {
+  const { loading, portfolio } = portfolioList
+  useEffect(async () => {
     dispatch(getPortfolio())
+
+    const response = await axios.get(
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+    )
+    setcoins(response.data)
   }, [])
 
-  console.log(portfolio)
+  const getCoin = (currency) => {
+    const filteredCoin = coins.filter(
+      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
+    )
+    // console.log(filteredCoin)
+    currentPrice.push({
+      currentPrice: filteredCoin[0].current_price,
+      currency: filteredCoin[0].name,
+    })
+  }
+
+  useEffect(() => {
+    if (portfolio && coins) {
+      arr = portfolio.map((crypto) => {
+        return crypto.currency
+      })
+    }
+
+    portfolio &&
+      portfolio.map((crypto) => {
+        getCoin(crypto.currency)
+      })
+  }, [portfolio, coins])
+
+  // console.log(portfolio)
 
   return (
     <>
@@ -123,6 +158,7 @@ const PortfolioScreen = () => {
                       <th>Currency</th>
                       <th>Units</th>
                       <th>Bought At</th>
+                      <th>Current Price</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -142,6 +178,9 @@ const PortfolioScreen = () => {
                           <td>{order.currency}</td>
                           <td>{order.units}</td>
                           <td className='text-success'>${order.amountPaid}</td>
+                          <td className='text-success'>
+                            ${currentPrice[index]}
+                          </td>
                         </tr>
                       ))}
                   </tbody>
