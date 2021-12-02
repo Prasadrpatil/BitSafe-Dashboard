@@ -15,6 +15,9 @@ const buySchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    current_price: {
+      type: Number,
+    },
     units: {
       type: Number,
       required: true,
