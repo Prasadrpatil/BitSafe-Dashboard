@@ -3,52 +3,17 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPortfolio } from '../../actions/userActions'
 import Loader from '../components/Loader'
-import axios from 'axios'
 
 const PortfolioScreen = () => {
-  const [coins, setcoins] = useState([])
-  let arr
-  let currentPrice = []
   const dispatch = useDispatch()
-
-  console.log('ggggggggggggg', currentPrice)
 
   const portfolioList = useSelector((state) => state.portfolioList)
   const { loading, portfolio } = portfolioList
   useEffect(async () => {
     dispatch(getPortfolio())
-
-    const response = await axios.get(
-      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
-    )
-    setcoins(response.data)
   }, [])
 
-  const getCoin = (currency) => {
-    const filteredCoin = coins.filter(
-      (coin) => coin.name.toLowerCase() === currency.toLowerCase()
-    )
-    // console.log(filteredCoin)
-    currentPrice.push({
-      currentPrice: filteredCoin[0].current_price,
-      currency: filteredCoin[0].name,
-    })
-  }
-
-  useEffect(() => {
-    if (portfolio && coins) {
-      arr = portfolio.map((crypto) => {
-        return crypto.currency
-      })
-    }
-
-    portfolio &&
-      portfolio.map((crypto) => {
-        getCoin(crypto.currency)
-      })
-  }, [portfolio, coins])
-
-  // console.log(portfolio)
+  console.log('ggggggggggggg', portfolio)
 
   return (
     <>
@@ -159,6 +124,7 @@ const PortfolioScreen = () => {
                       <th>Units</th>
                       <th>Bought At</th>
                       <th>Current Price</th>
+                      <th>% Change</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -177,10 +143,34 @@ const PortfolioScreen = () => {
                           </td>
                           <td>{order.currency}</td>
                           <td>{order.units}</td>
-                          <td className='text-success'>${order.amountPaid}</td>
-                          <td className='text-success'>
-                            ${currentPrice[index]}
+                          <td>
+                            ${(order.amountPaid / order.units).toFixed(8)}
                           </td>
+                          <td>${order.current_price}</td>
+                          {((order.current_price -
+                            order.amountPaid / order.units) /
+                            (order.amountPaid / order.units).toFixed(8)) *
+                            100 >
+                          0 ? (
+                            <td className='text-success'>
+                              +
+                              {(
+                                ((order.current_price -
+                                  order.amountPaid / order.units) /
+                                  (order.amountPaid / order.units)) *
+                                100
+                              ).toFixed(3)}
+                            </td>
+                          ) : (
+                            <td className='text-danger'>
+                              {(
+                                ((order.current_price -
+                                  order.amountPaid / order.units) /
+                                  (order.amountPaid / order.units)) *
+                                100
+                              ).toFixed(3)}
+                            </td>
+                          )}
                         </tr>
                       ))}
                   </tbody>

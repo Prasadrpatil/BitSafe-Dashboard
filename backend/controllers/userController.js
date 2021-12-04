@@ -6,6 +6,7 @@ import Otp from '../models/otpModel.js'
 import otpGenerator from 'otp-generator'
 import { sendEmailToUserForBuy } from '../email/nodemailer.js'
 import Sell from '../models/sellModel.js'
+import axios from 'axios'
 
 // @des     Auth user & get token
 // @route   POST /api/users/login
@@ -381,6 +382,25 @@ const updateSellOrder = asycHandler(async (req, res) => {
 const getPortfolio = asycHandler(async (req, res) => {
   const { id } = req.body
   let orderBuy = await Buy.find({ user: id, isConfirmed: true })
+
+  // console.log(orderBuy)
+  orderBuy.map(async (order) => {
+    let selectOrder = await Buy.findById(order._id)
+    // console.log(selectOrder)
+    await axios
+      .get(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false'
+      )
+      .then(async (res) => {
+        const filteredCoin = res.data.filter(
+          (coin) =>
+            coin.name?.toLowerCase() === selectOrder.currency?.toLowerCase()
+        )
+        const changedCurrentPrice = filteredCoin[0].current_price
+        selectOrder.current_price = changedCurrentPrice
+        const updatedOrder = await selectOrder.save()
+      })
+  })
 
   res.status(200).json(orderBuy)
 })
