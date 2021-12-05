@@ -9,7 +9,8 @@ const PortfolioScreen = () => {
 
   const portfolioList = useSelector((state) => state.portfolioList)
   const { loading, portfolio } = portfolioList
-  useEffect(async () => {
+
+  useEffect(() => {
     dispatch(getPortfolio())
   }, [])
 
