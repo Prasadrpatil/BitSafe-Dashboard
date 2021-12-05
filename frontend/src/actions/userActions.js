@@ -594,7 +594,10 @@ export const getPortfolio = () => async (dispatch, getState) => {
 
     dispatch({
       type: PORTFOLIO_LIST_SUCCESS,
-      payload: data,
+      payloadPortfolio: data[0],
+      payloadTotal: data[1],
+      payloadCurrent: data[2],
+      payloadPercentage: data[3],
     })
   } catch (error) {
     dispatch({

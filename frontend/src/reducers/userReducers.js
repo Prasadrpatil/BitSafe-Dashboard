@@ -293,7 +293,10 @@ export const updateSellOrderReducer = (state = { order: {} }, action) => {
   }
 }
 
-export const portfolioReducer = (state = { portfolio: [] }, action) => {
+export const portfolioReducer = (
+  state = { portfolio: [], totalValue:0, currentValue:0, percentage:0 },
+  action
+) => {
   switch (action.type) {
     case PORTFOLIO_LIST_REQUEST:
       return {
@@ -302,7 +305,10 @@ export const portfolioReducer = (state = { portfolio: [] }, action) => {
     case PORTFOLIO_LIST_SUCCESS:
       return {
         loading: false,
-        portfolio: action.payload,
+        portfolio: action.payloadPortfolio,
+        totalValue: action.payloadTotal,
+        currentValue: action.payloadCurrent,
+        percentage: action.payloadPercentage,
       }
     case PORTFOLIO_LIST_FAIL:
       return {

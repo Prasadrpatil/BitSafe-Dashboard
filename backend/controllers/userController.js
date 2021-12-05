@@ -398,11 +398,23 @@ const getPortfolio = asycHandler(async (req, res) => {
         )
         const changedCurrentPrice = filteredCoin[0].current_price
         selectOrder.current_price = changedCurrentPrice
-        const updatedOrder = await selectOrder.save()
+        await selectOrder.save()
       })
   })
+  let updatedOrderBuy = await Buy.find({ user: id, isConfirmed: true })
 
-  res.status(200).json(orderBuy)
+  let totalInvestment = 0
+  let currentValue = 0
+  let profitLoss
+  updatedOrderBuy.map(async (order) => {
+    totalInvestment = totalInvestment + order.amountPaid / order.units
+    currentValue = currentValue + order.current_price
+  })
+  profitLoss = ((currentValue - totalInvestment) / totalInvestment) * 100
+
+  res
+    .status(200)
+    .json([updatedOrderBuy, totalInvestment, currentValue, profitLoss])
 })
 
 export {
