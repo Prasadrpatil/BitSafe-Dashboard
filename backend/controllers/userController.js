@@ -4,7 +4,11 @@ import generateToken from '../utils/generateToken.js'
 import Buy from '../models/buyModel.js'
 import Otp from '../models/otpModel.js'
 import otpGenerator from 'otp-generator'
-import { sendEmailToUserForBuy } from '../email/nodemailer.js'
+import {
+  sendEmailVerification,
+  sendEmailForBuy,
+  sendEmailForSell,
+} from '../email/nodemailer.js'
 import Sell from '../models/sellModel.js'
 import axios from 'axios'
 
@@ -228,7 +232,7 @@ const generateOtp = asycHandler(async (req, res) => {
       specialChars: false,
     })
     const otpExistsNew = await otpExists.save()
-    sendEmailToUserForBuy(otpExistsNew.email, otpExistsNew.otp)
+    sendEmailVerification(otpExistsNew.email, otpExistsNew.otp)
     res.json(otpExistsNew)
   } else {
     const otp = await Otp.create({
@@ -241,7 +245,7 @@ const generateOtp = asycHandler(async (req, res) => {
     })
 
     if (otp) {
-      sendEmailToUserForBuy(otp.email, otp.otp)
+      sendEmailVerification(otp.email, otp.otp)
       res.status(201).json({
         otp: otp.otp,
         email: otp.email,
@@ -279,6 +283,7 @@ const verifyEmail = asycHandler(async (req, res) => {
 // @access  Private
 const buyCrypto = asycHandler(async (req, res) => {
   const { currency } = req.body
+  const email = currency.email
 
   const order = new Buy({
     user: req.user._id,
@@ -291,6 +296,9 @@ const buyCrypto = asycHandler(async (req, res) => {
   })
 
   const createdOrder = await order.save()
+  if (createdOrder) {
+    sendEmailForBuy(email, createdOrder)
+  }
   res.status(201).json(createdOrder)
 })
 
@@ -299,6 +307,7 @@ const buyCrypto = asycHandler(async (req, res) => {
 // @access  Private
 const sellCrypto = asycHandler(async (req, res) => {
   const { currency } = req.body
+  const email = currency.email
 
   const order = new Sell({
     user: req.user._id,
@@ -311,6 +320,9 @@ const sellCrypto = asycHandler(async (req, res) => {
   })
 
   const createdOrder = await order.save()
+  if (createdOrder) {
+    sendEmailForSell(email, createdOrder)
+  }
   res.status(201).json(createdOrder)
 })
 

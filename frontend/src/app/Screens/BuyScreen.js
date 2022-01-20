@@ -68,6 +68,7 @@ const BuyScreen = ({ history }) => {
         amountPaid: pay,
         units: receive.toFixed(8),
         mobile: userInfo.phone,
+        email: userInfo.email,
         walletId: walletId,
         paymentInfo: {
           paymentId: paymentId,

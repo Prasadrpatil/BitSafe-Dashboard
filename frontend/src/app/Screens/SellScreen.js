@@ -98,6 +98,7 @@ const SellScreen = ({ history }) => {
         amountReceive: pay,
         units: receive,
         mobile: userInfo.phone,
+        email: userInfo.email,
         walletId: walletId,
         bankDetail: bankDetail,
       })
@@ -179,7 +180,7 @@ const SellScreen = ({ history }) => {
                       value={pay}
                       required
                       min='1'
-                      step="any"
+                      step='any'
                       disabled={condition}
                     />
                   </div>
