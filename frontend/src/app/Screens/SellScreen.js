@@ -99,6 +99,7 @@ const SellScreen = ({ history }) => {
         units: receive,
         mobile: userInfo.phone,
         email: userInfo.email,
+        name: userInfo.name,
         walletId: walletId,
         bankDetail: bankDetail,
       })

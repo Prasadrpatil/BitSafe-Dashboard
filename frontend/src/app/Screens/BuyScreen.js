@@ -69,6 +69,7 @@ const BuyScreen = ({ history }) => {
         units: receive.toFixed(8),
         mobile: userInfo.phone,
         email: userInfo.email,
+        name: userInfo.name,
         walletId: walletId,
         paymentInfo: {
           paymentId: paymentId,

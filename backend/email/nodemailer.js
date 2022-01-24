@@ -121,12 +121,31 @@ const sendEmailVerification = async function (email, otp) {
                 font-size: 14px;
                 width: 80%;
                 display: block;
-                margin: 65px auto;
+                margin: 40px auto;
                 color: #000;
                 line-height: 1.5;
               "
             >
               <p>This is a system generated email please do not reply on it</p>
+              <div>
+              <br />
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/twitter-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/facebook-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/youtube-teal.png"
+              /></a>
+              <a style="margin: 3px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/linkedin-teal.png"
+              /></a>
+            </div>
             </td>
           </tr>
         </tbody>
@@ -144,7 +163,7 @@ const sendEmailVerification = async function (email, otp) {
   const result = await transport.sendMail(msg)
 }
 
-const sendEmailForBuy = async function (email, order) {
+const sendEmailForBuy = async function (email, name, order) {
   const transport = nodemailer.createTransport({
     service: 'gmail',
     port: 587,
@@ -157,7 +176,7 @@ const sendEmailForBuy = async function (email, order) {
   const msg = {
     to: email,
     from: 'BitSafe <prasadrpatil525@gmail.com>',
-    subject: `Cryptocurrency Buy!`,
+    subject: `Congratulations, ${name}! You have Bought Crypto Successfully!!`,
     html: `
     <body link="#0090e7" vlink="#0090e7" alink="#0090e7">
     <div>
@@ -196,9 +215,8 @@ const sendEmailForBuy = async function (email, order) {
                 background: #fff;
               "
             >
-              Email Verification <br />
-              for<br />
-              BitSafe Registration!
+              Thank You ${name},<br />
+              for Buying Crypto!
             </td>
           </tr>
         </tbody>
@@ -250,11 +268,12 @@ const sendEmailForBuy = async function (email, order) {
               "
             >
               <bF
-                >Verify your email with the following One Time Password (OTP) -
-                ${order} and do not share this OTP with anyone. <br />
-                <br />
-                This OTP is Valid for 5 minutes.</bF
-              >
+                >Thank you for purchasing your "${order.currency}" to the value of 
+                $${order.amountPaid}.<br /><br />
+                We will send your crypto to your address "${order.walletId}" as soon as
+                we have received the funds. Please note that we will not be held responsible for deposits to
+                incorrectly provided addresses.
+              </bF>
             </td>
           </tr>
           <tr style="display: block; width: 100%; float: left">
@@ -265,12 +284,31 @@ const sendEmailForBuy = async function (email, order) {
                 font-size: 14px;
                 width: 80%;
                 display: block;
-                margin: 65px auto;
+                margin: 40px auto;
                 color: #000;
                 line-height: 1.5;
               "
             >
               <p>This is a system generated email please do not reply on it</p>
+              <div>
+              <br />
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/twitter-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/facebook-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/youtube-teal.png"
+              /></a>
+              <a style="margin: 3px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/linkedin-teal.png"
+              /></a>
+            </div>
             </td>
           </tr>
         </tbody>
@@ -288,7 +326,7 @@ const sendEmailForBuy = async function (email, order) {
   const result = await transport.sendMail(msg)
 }
 
-const sendEmailForSell = async function (email, order) {
+const sendEmailForSell = async function (email, name, order) {
   const transport = nodemailer.createTransport({
     service: 'gmail',
     port: 587,
@@ -301,7 +339,7 @@ const sendEmailForSell = async function (email, order) {
   const msg = {
     to: email,
     from: 'BitSafe <prasadrpatil525@gmail.com>',
-    subject: `Cryptocurrency Sell!`,
+    subject: `Congratulations, ${name}! You have Sold Crypto Successfully!`,
     html: `
     <body link="#0090e7" vlink="#0090e7" alink="#0090e7">
     <div>
@@ -340,9 +378,8 @@ const sendEmailForSell = async function (email, order) {
                 background: #fff;
               "
             >
-              Email Verification <br />
-              for<br />
-              BitSafe Registration!
+              Thank You ${name},<br />
+              for Selling Crypto!
             </td>
           </tr>
         </tbody>
@@ -394,11 +431,19 @@ const sendEmailForSell = async function (email, order) {
               "
             >
               <bF
-                >Verify your email with the following One Time Password (OTP) -
-                ${order} and do not share this OTP with anyone. <br />
-                <br />
-                This OTP is Valid for 5 minutes.</bF
-              >
+                >Thank you for Selling your ${
+                  order.currency
+                } to the value of $${order.amountReceive.toFixed(3)}.
+                <b></b>
+                <br /><br />
+                Hello ${name}<br />
+                Thank you for selling your crypto "${order.currency}" to the
+                value of $${order.amountReceive.toFixed(
+                  3
+                )}. We will initiate payment (minus 3.9%
+                fee) to "${order.bankDetail}", once confirmation has been
+                provided of the deposit.
+              </bF>
             </td>
           </tr>
           <tr style="display: block; width: 100%; float: left">
@@ -409,12 +454,31 @@ const sendEmailForSell = async function (email, order) {
                 font-size: 14px;
                 width: 80%;
                 display: block;
-                margin: 65px auto;
+                margin: 40px auto;
                 color: #000;
                 line-height: 1.5;
               "
             >
               <p>This is a system generated email please do not reply on it</p>
+              <div>
+              <br />
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/twitter-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/facebook-teal.png"
+              /></a>
+              <a style="margin: 2px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/youtube-teal.png"
+              /></a>
+              <a style="margin: 3px" href="https://bitsafe-dashboard.web.app/"
+                ><img
+                  src="https://info.tenable.com/rs/tenable/images/linkedin-teal.png"
+              /></a>
+            </div>
             </td>
           </tr>
         </tbody>

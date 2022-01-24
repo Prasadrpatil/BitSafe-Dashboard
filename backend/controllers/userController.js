@@ -284,6 +284,7 @@ const verifyEmail = asycHandler(async (req, res) => {
 const buyCrypto = asycHandler(async (req, res) => {
   const { currency } = req.body
   const email = currency.email
+  const name = currency.name
 
   const order = new Buy({
     user: req.user._id,
@@ -297,7 +298,7 @@ const buyCrypto = asycHandler(async (req, res) => {
 
   const createdOrder = await order.save()
   if (createdOrder) {
-    sendEmailForBuy(email, createdOrder)
+    sendEmailForBuy(email, name, createdOrder)
   }
   res.status(201).json(createdOrder)
 })
@@ -308,6 +309,7 @@ const buyCrypto = asycHandler(async (req, res) => {
 const sellCrypto = asycHandler(async (req, res) => {
   const { currency } = req.body
   const email = currency.email
+  const name = currency.name
 
   const order = new Sell({
     user: req.user._id,
@@ -321,7 +323,7 @@ const sellCrypto = asycHandler(async (req, res) => {
 
   const createdOrder = await order.save()
   if (createdOrder) {
-    sendEmailForSell(email, createdOrder)
+    sendEmailForSell(email, name, createdOrder)
   }
   res.status(201).json(createdOrder)
 })

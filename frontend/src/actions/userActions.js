@@ -316,7 +316,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
 }
 
 export const buyCryptoAction =
-  (currency, amountPaid, units, mobile, email, walletId, paymentInfo) =>
+  (currency, amountPaid, units, mobile, email, name, walletId, paymentInfo) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -336,7 +336,16 @@ export const buyCryptoAction =
 
       const { data } = await axios.post(
         `${URL}/api/users/buyCrypto`,
-        { currency, amountPaid, units, mobile, email, walletId, paymentInfo },
+        {
+          currency,
+          amountPaid,
+          units,
+          mobile,
+          email,
+          name,
+          walletId,
+          paymentInfo,
+        },
         config
       )
 
@@ -356,7 +365,7 @@ export const buyCryptoAction =
   }
 
 export const sellCryptoAction =
-  (currency, amountReceive, units, mobile, email, walletId, bankDetail) =>
+  (currency, amountReceive, units, mobile, email, name, walletId, bankDetail) =>
   async (dispatch, getState) => {
     try {
       dispatch({
@@ -376,7 +385,16 @@ export const sellCryptoAction =
 
       const { data } = await axios.post(
         `${URL}/api/users/sellCrypto`,
-        { currency, amountReceive, units, mobile, email, walletId, bankDetail },
+        {
+          currency,
+          amountReceive,
+          units,
+          mobile,
+          email,
+          name,
+          walletId,
+          bankDetail,
+        },
         config
       )
 
