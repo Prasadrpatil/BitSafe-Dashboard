@@ -117,16 +117,15 @@ const Dashboard = ({ history, match }) => {
                   />
                 </div>
                 <div className='col-5 col-sm-7 col-xl-8 p-0'>
-                  <h4 className='mb-1 mb-sm-0'>New refreshing look</h4>
+                  <h4 className='mb-1 mb-sm-0'>Buy Cryptocurrency Now!</h4>
                   <p className='mb-0 font-weight-normal d-none d-sm-block'>
-                    Corona admin template now with a new facelift for enhanced
-                    legibility and aesthetics!
+                    Investments that will make you grow for a secured future
                   </p>
                 </div>
                 <div className='col-3 col-sm-2 col-xl-2 pl-0 text-center'>
-                  <button className='btn btn-outline-light btn-rounded get-started-btn'>
+                  <Link to='/buy/crypto' className='btn btn-outline-light btn-rounded get-started-btn'>
                     Get Started
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -372,10 +372,10 @@ const Navbar = () => {
                   </p>
                 </div>
               </Dropdown.Item>
-              <Dropdown.Divider />
+              {/* <Dropdown.Divider />
               <p className='p-3 mb-0 text-center'>
                 <Trans>Advanced settings</Trans>
-              </p>
+              </p> */}
             </Dropdown.Menu>
           </Dropdown>
         </ul>

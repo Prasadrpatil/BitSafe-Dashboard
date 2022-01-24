@@ -175,21 +175,30 @@ const PortfolioScreen = () => {
                             ${(order.amountPaid / order.units).toFixed(3)}
                           </td>
                           <td>${order.current_price}</td>
-                          {order.current_price -
-                            order.amountPaid / order.units >=
+
+                          {((order.current_price -
+                            order.amountPaid / order.units) /
+                            (order.amountPaid / order.units)) *
+                            100 >=
                           0 ? (
                             <td className='text-success'>
                               +
                               {(
-                                order.current_price -
-                                order.amountPaid / order.units
+                                (order.amountPaid / 100) *
+                                ((order.current_price -
+                                  order.amountPaid / order.units) /
+                                  (order.amountPaid / order.units)) *
+                                100
                               ).toFixed(3)}
                             </td>
                           ) : (
                             <td className='text-danger'>
                               {(
-                                order.current_price -
-                                order.amountPaid / order.units
+                                (order.amountPaid / 100) *
+                                ((order.current_price -
+                                  order.amountPaid / order.units) /
+                                  (order.amountPaid / order.units)) *
+                                100
                               ).toFixed(3)}
                             </td>
                           )}

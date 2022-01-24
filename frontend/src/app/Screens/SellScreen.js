@@ -119,9 +119,9 @@ const SellScreen = ({ history }) => {
               <div className='brand-logo'>
                 <h3 style={{ marginBottom: '-5px' }}>Sell Crypto</h3>
               </div>
-              <h4>New here?</h4>
+              {/* <h4>New here?</h4> */}
               <h6 className='font-weight-light'>
-                Signing up is easy. It only takes a few steps
+                Always The Real Thing, Always Cryptocurrency
               </h6>
               <form className='pt-3' onSubmit={submitHandler}>
                 {loading ? (
@@ -303,12 +303,12 @@ const SellScreen = ({ history }) => {
                     </button>
                   )}
                 </div>
-                <div className='text-center mt-4 font-weight-light'>
+                {/* <div className='text-center mt-4 font-weight-light'>
                   Already have an account?{' '}
                   <Link to='/login' className='text-primary'>
                     Login
                   </Link>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>

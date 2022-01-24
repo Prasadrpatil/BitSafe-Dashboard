@@ -168,9 +168,9 @@ const BuyScreen = ({ history }) => {
               <div className='brand-logo'>
                 <h3 style={{ marginBottom: '-5px' }}>Buy Crypto</h3>
               </div>
-              <h4>New here?</h4>
+              {/* <h4>New here?</h4> */}
               <h6 className='font-weight-light'>
-                Signing up is easy. It only takes a few steps
+                Don’t be late, Investing is great for secured future
               </h6>
               <form className='pt-3' onSubmit={submitHandler}>
                 {loading ? (
@@ -205,7 +205,7 @@ const BuyScreen = ({ history }) => {
                       required
                       min='1'
                       max='2000'
-                      step="any"
+                      step='any'
                       disabled={condition}
                     />
                   </div>
@@ -317,12 +317,12 @@ const BuyScreen = ({ history }) => {
                     </button>
                   )}
                 </div>
-                <div className='text-center mt-4 font-weight-light'>
+                {/* <div className='text-center mt-4 font-weight-light'>
                   Already have an account?{' '}
                   <Link to='/login' className='text-primary'>
                     Login
                   </Link>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
