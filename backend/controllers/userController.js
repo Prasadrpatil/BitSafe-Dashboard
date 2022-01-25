@@ -26,6 +26,12 @@ const authUser = asycHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      address1: user.address1,
+      address2: user.address2,
+      city: user.city,
+      postal: user.postal,
+      state: user.state,
+      country: user.country,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
       dob: user.dob,
@@ -43,7 +49,19 @@ const authUser = asycHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asycHandler(async (req, res) => {
-  const { name, email, phone, password, confirmPassword } = req.body
+  const {
+    name,
+    email,
+    phone,
+    address1,
+    address2,
+    city,
+    postal,
+    state,
+    country,
+    password,
+    confirmPassword,
+  } = req.body
   console.log(req.body)
 
   const userExists = await User.findOne({ email })
@@ -73,6 +91,12 @@ const registerUser = asycHandler(async (req, res) => {
     name,
     email,
     phone,
+    address1,
+    address2,
+    city,
+    postal,
+    state,
+    country,
     password,
   })
 
@@ -82,6 +106,12 @@ const registerUser = asycHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      address1: user.address1,
+      address2: user.address2,
+      city: user.city,
+      postal: user.postal,
+      state: user.state,
+      country: user.country,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
       token: generateToken(user._id),
@@ -104,6 +134,12 @@ const getUserProfile = asycHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      address1: user.address1,
+      address2: user.address2,
+      city: user.city,
+      postal: user.postal,
+      state: user.state,
+      country: user.country,
       isAdmin: user.isAdmin,
       isKyc: user.isKyc,
       dob: user.dob,
@@ -126,6 +162,12 @@ const updateUserProfile = asycHandler(async (req, res) => {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
     user.phone = req.body.phone || user.phone
+    user.address1 = req.body.address1 || user.address1
+    user.address2 = req.body.address2 || user.address2
+    user.city = req.body.city || user.city
+    user.postal = req.body.postal || user.postal
+    user.state = req.body.state || user.state
+    user.country = req.body.country || user.country
     user.isKyc = true
     user.dob = req.body.dob
     user.aadhar = req.body.aadhar
@@ -141,6 +183,12 @@ const updateUserProfile = asycHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       phone: updatedUser.phone,
+      address1: updatedUser.address1,
+      address2: updatedUser.address2,
+      city: updatedUser.city,
+      postal: updatedUser.postal,
+      state: updatedUser.state,
+      country: updatedUser.country,
       isAdmin: updatedUser.isAdmin,
       isKyc: updatedUser.isKyc,
       dob: updatedUser.dob,

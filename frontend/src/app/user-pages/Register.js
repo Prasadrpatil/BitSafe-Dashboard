@@ -11,6 +11,12 @@ const Register = ({ history }) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
+  const [country, setCountry] = useState('')
+  const [address1, setAddress1] = useState('')
+  const [address2, setAddress2] = useState('')
+  const [city, setCity] = useState('')
+  const [postal, setPostal] = useState('')
+  const [state, setState] = useState('')
   const [otp, setotp] = useState('')
   const [isVerified, setisVerified] = useState(false)
   const [isOtpSend, setisOtpSend] = useState(false)
@@ -35,7 +41,21 @@ const Register = ({ history }) => {
 
   const onclickHandler = (e) => {
     e.preventDefault()
-    dispatch(register(name, email, phone, password, confirmPassword))
+    dispatch(
+      register(
+        name,
+        email,
+        phone,
+        address1,
+        address2,
+        city,
+        postal,
+        state,
+        country,
+        password,
+        confirmPassword
+      )
+    )
   }
 
   const sendOtpHandler = async (e) => {
@@ -228,17 +248,6 @@ const Register = ({ history }) => {
                 )}
 
                 <div className='form-group'>
-                  <select
-                    className='form-control form-control-lg'
-                    id='exampleFormControlSelect2'
-                  >
-                    <option>Country</option>
-                    <option>India</option>
-                    <option>United Kingdom</option>
-                    <option>United States of America</option>
-                  </select>
-                </div>
-                <div className='form-group'>
                   <input
                     type='number'
                     className='form-control form-control-lg'
@@ -248,6 +257,74 @@ const Register = ({ history }) => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                   />
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='Address1'
+                    required
+                    value={address1}
+                    onChange={(e) => setAddress1(e.target.value)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='Address2'
+                    required
+                    value={address2}
+                    onChange={(e) => setAddress2(e.target.value)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='City'
+                    required
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='number'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='Postal Code'
+                    required
+                    value={postal}
+                    onChange={(e) => setPostal(e.target.value)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <input
+                    type='text'
+                    className='form-control form-control-lg'
+                    id='exampleInputPassword1'
+                    placeholder='State'
+                    required
+                    value={state}
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <select
+                    className='form-control form-control-lg'
+                    id='exampleFormControlSelect2'
+                    onChange={(e) => setCountry(e.target.value)}
+                    required
+                  >
+                    <option selected disabled>
+                      Country
+                    </option>
+                    <option value='India'>India</option>
+                  </select>
                 </div>
                 <div className='form-group'>
                   <input

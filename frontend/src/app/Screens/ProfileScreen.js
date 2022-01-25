@@ -112,33 +112,15 @@ const ProfileScreen = ({ history }) => {
                   <Form.Group className='row'>
                     <label className='col-sm-3 col-form-label'>Address 1</label>
                     <div className='col-sm-9'>
-                      <Form.Control type='text' />
+                      <Form.Control value={user.address1} />
                     </div>
                   </Form.Group>
                 </div>
-                <div className='col-md-6'>
-                  <Form.Group className='row'>
-                    <label className='col-sm-3 col-form-label'>State 1</label>
-                    <div className='col-sm-9'>
-                      <Form.Control type='text' />
-                    </div>
-                  </Form.Group>
-                </div>
-              </div>
-              <div className='row'>
                 <div className='col-md-6'>
                   <Form.Group className='row'>
                     <label className='col-sm-3 col-form-label'>Address 2</label>
                     <div className='col-sm-9'>
-                      <Form.Control type='text' />
-                    </div>
-                  </Form.Group>
-                </div>
-                <div className='col-md-6'>
-                  <Form.Group className='row'>
-                    <label className='col-sm-3 col-form-label'>Postcode</label>
-                    <div className='col-sm-9'>
-                      <Form.Control type='text' />
+                      <Form.Control value={user.address2} />
                     </div>
                   </Form.Group>
                 </div>
@@ -146,9 +128,29 @@ const ProfileScreen = ({ history }) => {
               <div className='row'>
                 <div className='col-md-6'>
                   <Form.Group className='row'>
-                    <label className='col-sm-3 col-form-label'>Cirt</label>
+                    <label className='col-sm-3 col-form-label'>City</label>
                     <div className='col-sm-9'>
-                      <Form.Control type='text' />
+                      <Form.Control value={user.city} />
+                    </div>
+                  </Form.Group>
+                </div>
+                <div className='col-md-6'>
+                  <Form.Group className='row'>
+                    <label className='col-sm-3 col-form-label'>
+                      Postal code
+                    </label>
+                    <div className='col-sm-9'>
+                      <Form.Control value={user.postal} />
+                    </div>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col-md-6'>
+                  <Form.Group className='row'>
+                    <label className='col-sm-3 col-form-label'>State</label>
+                    <div className='col-sm-9'>
+                      <Form.Control value={user.state} />
                     </div>
                   </Form.Group>
                 </div>
@@ -156,12 +158,7 @@ const ProfileScreen = ({ history }) => {
                   <Form.Group className='row'>
                     <label className='col-sm-3 col-form-label'>Country</label>
                     <div className='col-sm-9'>
-                      <select className='form-control'>
-                        <option>America</option>
-                        <option>Italy</option>
-                        <option>Russia</option>
-                        <option>Britain</option>
-                      </select>
+                      <Form.Control value={user.country} />
                     </div>
                   </Form.Group>
                 </div>
