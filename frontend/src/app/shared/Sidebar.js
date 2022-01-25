@@ -54,15 +54,29 @@ class Sidebar extends Component {
     return (
       <nav className='sidebar sidebar-offcanvas' id='sidebar'>
         <div className='sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top'>
-          <Link className='sidebar-brand brand-logo' to='/dashboard'>
-            <img src={require('../../assets/images/logo.svg')} alt='logo' />
+          <Link
+            style={{ textDecoration: 'none' }}
+            className='sidebar-brand brand-logo'
+            to='/dashboard'
+          >
+            <div className='brand-logo'>
+              <h3
+                style={{
+                  marginLeft: '10px',
+                  marginTop: '15px',
+                  color: 'white',
+                }}
+              >
+                B I T S A F E
+              </h3>
+            </div>
           </Link>
-          <a className='sidebar-brand brand-logo-mini' href='index.html'>
+          <Link to='/dashboard' className='sidebar-brand brand-logo-mini'>
             <img
               src={require('../../assets/images/logo-mini.svg')}
               alt='logo'
             />
-          </a>
+          </Link>
         </div>
         <ul className='nav'>
           <li className='nav-item profile'>

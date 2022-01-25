@@ -93,7 +93,15 @@ const Register = ({ history }) => {
           <div className='col-lg-6 mx-auto'>
             <div className='card text-left py-5 px-4 px-sm-5'>
               <div className='brand-logo'>
-                <img src={require('../../assets/images/logo.svg')} alt='logo' />
+                <h3
+                  style={{
+                    marginTop: '10px',
+                    marginBottom: '-2px',
+                    color: 'white',
+                  }}
+                >
+                  B I T S A F E
+                </h3>
               </div>
               <h4>New here?</h4>
               <h6 className='font-weight-light'>

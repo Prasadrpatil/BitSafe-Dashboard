@@ -98,11 +98,19 @@ const KycScreen = ({ history }) => {
           <div className='col-lg-4 mx-auto'>
             <div className='card text-left py-5 px-4 px-sm-5'>
               <div className='brand-logo'>
-                <img src={require('../../assets/images/logo.svg')} alt='logo' />
+                <h3
+                  style={{
+                    marginTop: '-15px',
+                    marginBottom: '-2px',
+                    color: 'white',
+                  }}
+                >
+                  K Y C
+                </h3>
               </div>
-              <h4>New here?</h4>
+              <h4>It only takes a few steps.</h4>
               <h6 className='font-weight-light'>
-                Signing up is easy. It only takes a few steps
+                we doesn't share your information in any manner.
               </h6>
               <form className='pt-3'>
                 {updateLoading ? (

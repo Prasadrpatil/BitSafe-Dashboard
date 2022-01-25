@@ -31,7 +31,15 @@ const Login = ({ history }) => {
           <div className='col-lg-4 mx-auto'>
             <div className='card text-left py-5 px-4 px-sm-5'>
               <div className='brand-logo'>
-                <img src={require('../../assets/images/logo.svg')} alt='logo' />
+                <h3
+                  style={{
+                    marginTop: '-15px',
+                    marginBottom: '-2px',
+                    color: 'white',
+                  }}
+                >
+                  B I T S A F E
+                </h3>
               </div>
               <h4>Hello! let's get started</h4>
               <h6 className='font-weight-light'>Sign in to continue.</h6>
@@ -106,7 +114,7 @@ const Login = ({ history }) => {
                     Forgot password?
                   </a>
                 </div>
-                <div className='mb-2'>
+                {/* <div className='mb-2'>
                   <button
                     type='button'
                     className='btn btn-block btn-facebook auth-form-btn'
@@ -114,7 +122,7 @@ const Login = ({ history }) => {
                     <i className='mdi mdi-facebook mr-2'></i>Connect using
                     facebook
                   </button>
-                </div>
+                </div> */}
                 <div className='text-center mt-4 font-weight-light'>
                   Don't have an account?{' '}
                   <Link to='/register' className='text-primary'>
