@@ -204,6 +204,7 @@ const Register = ({ history }) => {
                           className='btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn'
                           style={{ padding: '12px' }}
                           onClick={sendOtpHandler}
+                          disabled={email ? false : true}
                         >
                           Send OTP
                         </button>
@@ -227,6 +228,7 @@ const Register = ({ history }) => {
                             className='btn btn-block btn-success btn-lg font-weight-medium auth-form-btn'
                             style={{ padding: '12px' }}
                             onClick={verifyEmailHandler}
+                            disabled={otp ? false : true}
                           >
                             Verify Email
                           </button>

@@ -73,7 +73,7 @@ const ProfileScreen = ({ history }) => {
                   <Form.Group className='row'>
                     <label className='col-sm-3 col-form-label'>Phone</label>
                     <div className='col-sm-9'>
-                      <Form.Control value={user.phone} />
+                      <Form.Control value={`+91 ` + user.phone} />
                     </div>
                   </Form.Group>
                 </div>
