@@ -4,6 +4,8 @@ import { Form } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import { login } from '../../actions/userActions'
 import { useDispatch, useSelector } from 'react-redux'
+import { signInWithGoogle } from '../../Firebase/firebase'
+import GoogleButton from 'react-google-button'
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('')
@@ -24,6 +26,11 @@ const Login = ({ history }) => {
     e.preventDefault()
     dispatch(login(email, password))
   }
+  const signInGoogle = (e) => {
+    e.preventDefault()
+    signInWithGoogle()
+  }
+
   return (
     <div>
       <div className='d-flex align-items-center auth px-0'>
@@ -114,15 +121,12 @@ const Login = ({ history }) => {
                     Forgot password?
                   </a>
                 </div>
-                {/* <div className='mb-2'>
-                  <button
-                    type='button'
-                    className='btn btn-block btn-facebook auth-form-btn'
-                  >
-                    <i className='mdi mdi-facebook mr-2'></i>Connect using
-                    facebook
-                  </button>
-                </div> */}
+                <div className='mb-2'>
+                  <GoogleButton
+                    style={{ width: '100%' }}
+                    // onClick={signInWithGoogle}
+                  />
+                </div>
                 <div className='text-center mt-4 font-weight-light'>
                   Don't have an account?{' '}
                   <Link to='/register' className='text-primary'>
