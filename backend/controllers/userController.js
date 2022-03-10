@@ -334,6 +334,8 @@ const buyCrypto = asycHandler(async (req, res) => {
   const email = currency.email
   const name = currency.name
 
+  console.log(name)
+
   const order = new Buy({
     user: req.user._id,
     currency: currency.currency,

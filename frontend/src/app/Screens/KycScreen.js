@@ -5,6 +5,7 @@ import axios from 'axios'
 import Loader from '../components/Loader'
 import { updateUserProfile } from '../../actions/userActions'
 import { Form } from 'react-bootstrap'
+import { logout } from '../../actions/userActions'
 
 const KycScreen = ({ history }) => {
   const [name, setName] = useState('')
@@ -91,6 +92,12 @@ const KycScreen = ({ history }) => {
       })
     )
   }
+
+  const logoutHandler = (e) => {
+    e.preventDefault()
+    dispatch(logout())
+  }
+
   return (
     <div>
       <div className='d-flex align-items-center auth px-0 h-100'>
@@ -205,6 +212,15 @@ const KycScreen = ({ history }) => {
                     disabled={disableButton}
                   >
                     SUBMIT
+                  </button>
+                </div>
+
+                <div className='mt-3'>
+                  <button
+                    className='btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn'
+                    onClick={logoutHandler}
+                  >
+                    LOGOUT
                   </button>
                 </div>
               </form>
