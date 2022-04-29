@@ -2,17 +2,17 @@ import nodemailer from 'nodemailer'
 
 const sendEmailVerification = async function (email, otp) {
   const transport = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp-mail.outlook.com',
     port: 587,
     auth: {
-      user: 'prasadrpatil525@gmail.com',
+      user: 'no-reply.bitsafe@hotmail.com',
       pass: process.env.MAIL,
     },
   })
 
   const msg = {
     to: email,
-    from: 'BitSafe <prasadrpatil525@gmail.com>',
+    from: 'BitSafe <no-reply.bitsafe@hotmail.com>',
     subject: `OTP For Email Verification`,
     html: `
     <body link="#0090e7" vlink="#0090e7" alink="#0090e7">
@@ -165,17 +165,17 @@ const sendEmailVerification = async function (email, otp) {
 
 const sendEmailForBuy = async function (email, name, order) {
   const transport = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp-mail.outlook.com',
     port: 587,
     auth: {
-      user: 'prasadrpatil525@gmail.com',
+      user: 'no-reply.bitsafe@hotmail.com',
       pass: process.env.MAIL,
     },
   })
 
   const msg = {
     to: email,
-    from: 'BitSafe <prasadrpatil525@gmail.com>',
+    from: 'BitSafe <no-reply.bitsafe@hotmail.com>',
     subject: `Congratulations, ${name}! You have Bought Crypto Successfully!!`,
     html: `
     <body link="#0090e7" vlink="#0090e7" alink="#0090e7">
@@ -328,17 +328,17 @@ const sendEmailForBuy = async function (email, name, order) {
 
 const sendEmailForSell = async function (email, name, order) {
   const transport = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp-mail.outlook.com',
     port: 587,
     auth: {
-      user: 'prasadrpatil525@gmail.com',
+      user: 'no-reply.bitsafe@hotmail.com',
       pass: process.env.MAIL,
     },
   })
 
   const msg = {
     to: email,
-    from: 'BitSafe <prasadrpatil525@gmail.com>',
+    from: 'BitSafe <no-reply.bitsafe@hotmail.com>',
     subject: `Congratulations, ${name}! You have Sold Crypto Successfully!`,
     html: `
     <body link="#0090e7" vlink="#0090e7" alink="#0090e7">
